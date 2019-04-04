@@ -33,6 +33,22 @@ int main()
 	Enemy enemies[4] = {NULL};
 	AllyList* allies = (AllyList*)malloc(sizeof(AllyList));
 	
+	//POPULATE VARIABLES ======================================================
+	//populate Ememy array
+	
 	//EXECUTION START =========================================================
-	printf("Hello!");
+	printf("Welcome to our CNIT 315 Final Project!");
 }
+
+//insertAlly FUNCTION =========================================================
+
+//removeAlly FUNCTION =========================================================
+
+//peekAllies FUNCTION =========================================================
+
+//sizeAlly FUNCTION ===========================================================
+
+//isEmptyAlly FUNCTION ========================================================
+
+//randomNum FUNCTION ==========================================================
+
