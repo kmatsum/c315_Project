@@ -5,11 +5,11 @@
 int main()
 {	
 	//FUNCTION PROTOTYPES =====================================================
-	void insertAlly(); //add a new ally
-	void removeAlly(); //remove an existing ally
-	void peekAllies(); //view all allies
-	void sizeAlly(); //view the number of allies
-	void isEmptyAlly(); //see if ally linked list is empty
+	Ally* insertAlly(Ally*); //add a new ally
+	Ally* removeAlly(Ally*); //remove an existing ally
+	Ally* peekAllies(Ally*); //view all allies
+	int sizeAlly(Ally*); //view the number of allies
+	int isEmptyAlly(Ally*); //see if ally linked list is empty
 	int randomNum(); //returns a random number from the API
 	
 	//MONSTER STRUCTURES ======================================================
@@ -24,14 +24,10 @@ int main()
 		struct Ally* next;
 	} Ally;
 	
-	typedef struct AllyList
-	{
-		Ally* head;
-	} AllyList;
-	
 	//VARIABLES ===============================================================
-	Enemy enemies[4] = {NULL};
-	AllyList* allies = (AllyList*)malloc(sizeof(AllyList));
+	Enemy enemies[4] = {NULL}; //create enemy array
+	Ally* allies = {NULL}; //create ally linked list
+	Ally* current = {NULL}; //create current ally pointer
 	
 	//POPULATE VARIABLES ======================================================
 	//populate Ememy array
