@@ -1,18 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//MAIN ========================================================================
+//FUNCTION: main  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 int main()
 {	
-	//FUNCTION PROTOTYPES =====================================================
+	//FUNCTION PROTOTYPES = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	Ally* insertAlly(Ally*); //add a new ally
 	Ally* removeAlly(Ally*); //remove an existing ally
 	Ally* peekAllies(Ally*); //view all allies
+	
 	int sizeAlly(Ally*); //view the number of allies
 	int isEmptyAlly(Ally*); //see if ally linked list is empty
 	int randomNum(); //returns a random number from the API
+	//END OF: Function Prototypes = = = = = = = = = = = = = = = = = = = = = = =
 	
-	//MONSTER STRUCTURES ======================================================
+	
+	
+	//Monster Structures  = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	typedef struct Ememy
 	{
 		char* name;
@@ -23,28 +27,48 @@ int main()
 		char* name;
 		struct Ally* next;
 	} Ally;
+	//END OF: Monster Structure = = = = = = = = = = = = = = = = = = = = = = = =
 	
-	//VARIABLES ===============================================================
+	
+	
+	//Variables = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	Enemy enemies[4] = {NULL}; //create enemy array
 	Ally* allies = {NULL}; //create ally linked list
 	Ally* current = {NULL}; //create current ally pointer
+	//END OF: Variables = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	
-	//POPULATE VARIABLES ======================================================
+	
+	
+	//Populate Variables  = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	//populate Ememy array
 	
-	//EXECUTION START =========================================================
+	//Game Code = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	printf("Welcome to our CNIT 315 Final Project!");
-}
+	
+	//END OF: Game Code
+	
+} //END OF: main
 
-//insertAlly FUNCTION =========================================================
+//FUNCTION: insertAlly  = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-//removeAlly FUNCTION =========================================================
 
-//peekAllies FUNCTION =========================================================
 
-//sizeAlly FUNCTION ===========================================================
+//FUNCTION: removeAlly  = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-//isEmptyAlly FUNCTION ========================================================
 
-//randomNum FUNCTION ==========================================================
+
+//FUNCTION: peekAllies  = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+
+
+//FUNCTION: sizeAlly  = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+
+
+//FUNCTION: isEmptyAlly = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+
+
+//FUNCTION: randomNum = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
 
