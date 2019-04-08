@@ -1,6 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
+//Monster Structures  = = = = = = = = = = = = = = = = = = = = = = = = = = =
+typedef struct Ememy
+{
+	char* name;
+} Enemy;
+
+typedef struct Ally
+{
+	char* name;
+	struct Ally* next;
+} Ally;
+//END OF: Monster Structure = = = = = = = = = = = = = = = = = = = = = = = =
+
+
+	
 //FUNCTION: main  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 int main()
 {	
@@ -13,21 +30,6 @@ int main()
 	int isEmptyAlly(Ally*); //see if ally linked list is empty
 	int randomNum(); //returns a random number from the API
 	//END OF: Function Prototypes = = = = = = = = = = = = = = = = = = = = = = =
-	
-	
-	
-	//Monster Structures  = = = = = = = = = = = = = = = = = = = = = = = = = = =
-	typedef struct Ememy
-	{
-		char* name;
-	} Enemy;
-	
-	typedef struct Ally
-	{
-		char* name;
-		struct Ally* next;
-	} Ally;
-	//END OF: Monster Structure = = = = = = = = = = = = = = = = = = = = = = = =
 	
 	
 	
