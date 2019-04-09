@@ -3,17 +3,13 @@
 
 
 
-//Monster Structures  = = = = = = = = = = = = = = = = = = = = = = = = = = =
-typedef struct Ememy
+//Monster Structure = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+typedef struct Monster
 {
 	char* name;
-} Enemy;
-
-typedef struct Ally
-{
-	char* name;
-	struct Ally* next;
-} Ally;
+	int health;
+	struct Ally* Monster;
+} Monster;
 //END OF: Monster Structure = = = = = = = = = = = = = = = = = = = = = = = =
 
 
@@ -22,12 +18,12 @@ typedef struct Ally
 int main()
 {	
 	//FUNCTION PROTOTYPES = = = = = = = = = = = = = = = = = = = = = = = = = = =
-	Ally* insertAlly(Ally*); //add a new ally
-	Ally* removeAlly(Ally*); //remove an existing ally
-	Ally* peekAllies(Ally*); //view all allies
+	Monster* insertAlly(Monster*); //add a new ally
+	Monster* removeAlly(Monster*); //remove a preexisting ally
+	Monster* peekAllies(Monster*); //view all allies
 	
-	int sizeAlly(Ally*); //view the number of allies
-	int isEmptyAlly(Ally*); //see if ally linked list is empty
+	int sizeAlly(Monster*); //view the number of allies
+	int isEmptyAlly(Monster*); //see if ally linked list is empty
 	int randomNum(); //returns a random number from the API
 	//END OF: Function Prototypes = = = = = = = = = = = = = = = = = = = = = = =
 	
@@ -35,8 +31,9 @@ int main()
 	
 	//Variables = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	Enemy enemies[4] = {NULL}; //create enemy array
-	Ally* allies = {NULL}; //create ally linked list
-	Ally* current = {NULL}; //create current ally pointer
+	Monster* allies = {NULL}; //create ally linked list
+	Monster* currentAlly = {NULL}; //create current ally pointer
+	int currentEnemy = {NULL}; //index of current enemy
 	//END OF: Variables = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 	
 	
