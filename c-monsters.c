@@ -93,7 +93,8 @@ void printList(monster* n) {
 //FUNCTION: FileIO
 monster* fileIO (monster* xHead) {
 	FILE *MONSTERLIST = fopen("Monsters.txt", "r");
-	char line[256];
+	char* line;
+	size_t bufsize = 64;
 	monster* head = (monster*)malloc(sizeof(monster*));
 	monster* current = head;
 	
@@ -102,14 +103,15 @@ monster* fileIO (monster* xHead) {
 		exit(0);
 	}
 	
-	
+	line = (char*) malloc(bufsize * sizeof(char));
 	
 	fgets(line, sizeof(line), MONSTERLIST);
 	strcpy(head -> name, line);
 	
 	
 	
-	while (getline(*line, 256, MONSTERLIST) != NULL) { /* read a line */
+	while (!feof(MONSTERLIST)) { /* read a line */
+		getline(&line, &bufsize, MONSTERLIST);
 		monster* temp = (monster*)malloc(sizeof(monster));
 		
 		strcpy(temp -> name, line);
