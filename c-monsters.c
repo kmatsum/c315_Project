@@ -109,7 +109,7 @@ monster* fileIO (monster* xHead) {
 	
 	
 	
-	while (fgets(line, sizeof line, MONSTERLIST) != NULL) { /* read a line */
+	while (getline(*line, 256, MONSTERLIST) != NULL) { /* read a line */
 		monster* temp = (monster*)malloc(sizeof(monster));
 		
 		strcpy(temp -> name, line);
@@ -118,6 +118,7 @@ monster* fileIO (monster* xHead) {
 		current = temp;
 		printf("line = %s", line);
 		printf("temp = %s", temp -> name);
+		printf("\n");
 	}
 	
 	printList(head);
