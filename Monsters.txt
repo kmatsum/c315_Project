@@ -1,9 +1,11 @@
-Kazushi
-Rachel
-Jon
-1234
-Paul
-Jake
-Ian
-John
-Michael
+Charizard
+30	20	10
+
+Squirttle
+50	30	5
+
+Bulbasaur
+10	10	10
+
+Pokemonr
+10	10	10
