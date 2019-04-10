@@ -56,12 +56,11 @@ int main () {
 	//Populate Ememy array
 	
 	//Game Code = = = = = = = = = = = = = = = = =
-	welcomeMessage(playerName);
-	availableMonsterList = fileIO();
-	printList(availableMonsterList);
-	playerRoster = fillPlayerRoster(availableMonsterList);
-	printList(playerRoster);
-	//END OF: Game Code
+	welcomeMessage(playerName); //welcome user
+	availableMonsterList = fileIO(); //import monsters
+	printList(availableMonsterList); //print available monsters
+	playerRoster = fillPlayerRoster(availableMonsterList); //add available monsters to roster
+	printList(playerRoster); //print player selected monsters
 	
 } //END OF: main
 
