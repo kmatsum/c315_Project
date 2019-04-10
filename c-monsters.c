@@ -175,6 +175,7 @@ monster* fillPlayerRoster (monster* availableMonsters)
 	int index; //variable to store user index choice
 	int count = 0; //variable to keep track of number of added monsters
 	
+	printf("============================================================\n\n");
 	printf("Please enter the numbers of the Monsters to add to your roster.\n");
 	printf("You may choose between 1 and 6 Monsters.\n");
 	printf("Enter '0' when you are done.\n\n");
