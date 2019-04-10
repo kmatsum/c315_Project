@@ -168,40 +168,40 @@ void printList(monster* n) {
 
 
 //FUNCTION: fillPlayerRoster  = = = = = = = = = = = = = = = = = = = = = = = = =
-monster* fillPlayerRoster (monster* availableMonsters)
+monster* fillPlayerRoster (monster* importedMonsters)
 {
 	//variables
 	monster* head = NULL; //player list pointer to return
+	monster* currentMonster = importedMonsters;
 	int index; //variable to store user index choice
 	int count = 0; //variable to keep track of number of added monsters
 	
+	printf("============================================================\n\n");
 	printf("Please enter the numbers of the Monsters to add to your roster.\n");
 	printf("You may choose between 1 and 6 Monsters.\n");
 	printf("Enter '0' when you are done.\n\n");
 	
-	while (1 == 1)
-	{
+	while (1 == 1) {
+		//reset monster list
+		currentMonster = importedMonsters;
 		//read user input
 		printf("Index: ");
 		scanf(" %d",&index);
 		
 		//break if 0 was entered to quit
-		if (index == 0)
-		{
+		if (index == 0) {
 			//return if 0 monsters have been entered
-			if (count == 0)
-			{
+			if (count == 0) {
 				printf("\nYou have not added any Monsters!\n\n");
 				printf("Index: ");
-				scanf(" %d",&index);
+				scanf("%d",&index);
 			}
 			else 
 				break;
 		}
 		
 		//check for max of 6 monsters
-		if (count == 6)
-		{
+		if (count == 6) {
 			printf("\nYou have reached the maximum of 6 monsters.\n");
 			break;
 		}
@@ -211,15 +211,14 @@ monster* fillPlayerRoster (monster* availableMonsters)
 		int i = 1; //int to compare with desired index
 		
 		//cycle through imported list
-		while(availableMonsters != NULL) {
+		while(currentMonster != NULL) {
 			//when at the desired monster
-			if (i == index)
-			{
+			if (i == index) {
 				//copy data to node 
-				strcpy(temp->name, availableMonsters -> name);
-				temp -> attack = availableMonsters -> attack;
-				temp -> defence = availableMonsters -> defence;
-				temp -> speed = availableMonsters -> speed;
+				strcpy(temp->name, currentMonster -> name);
+				temp -> attack = currentMonster -> attack;
+				temp -> defence = currentMonster -> defence;
+				temp -> speed = currentMonster -> speed;
 				
 				//add to front of list
 				temp -> next = head;
@@ -231,7 +230,7 @@ monster* fillPlayerRoster (monster* availableMonsters)
 				break;
 			}
 			//continue cycling through if not at desired monster
-			availableMonsters = availableMonsters -> next;
+			currentMonster = currentMonster -> next;
 			i++;
 		}
 	}
