@@ -179,18 +179,15 @@ monster* fillPlayerRoster (monster* availableMonsters)
 	printf("You may choose between 1 and 6 Monsters.\n");
 	printf("Enter '0' when you are done.\n\n");
 	
-	while (1 == 1)
-	{
+	while (1 == 1) {
 		//read user input
 		printf("Index: ");
 		scanf(" %d",&index);
 		
 		//break if 0 was entered to quit
-		if (index == 0)
-		{
+		if (index == 0) {
 			//return if 0 monsters have been entered
-			if (count == 0)
-			{
+			if (count == 0) {
 				printf("\nYou have not added any Monsters!\n\n");
 				printf("Index: ");
 				scanf(" %d",&index);
@@ -200,8 +197,7 @@ monster* fillPlayerRoster (monster* availableMonsters)
 		}
 		
 		//check for max of 6 monsters
-		if (count == 6)
-		{
+		if (count == 6) {
 			printf("\nYou have reached the maximum of 6 monsters.\n");
 			break;
 		}
@@ -213,8 +209,7 @@ monster* fillPlayerRoster (monster* availableMonsters)
 		//cycle through imported list
 		while(availableMonsters != NULL) {
 			//when at the desired monster
-			if (i == index)
-			{
+			if (i == index) {
 				//copy data to node 
 				strcpy(temp->name, availableMonsters -> name);
 				temp -> attack = availableMonsters -> attack;
