@@ -20,18 +20,18 @@ typedef struct monster {
 //END OF: Monster Structure = = = = = = = = = = = = = = = = = = = = = = = =
 
 
+
 	
 //FUNCTION: main  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 int main () {	
 	//FUNCTION PROTOTYPES = = = = = = = = = = = =
 	void welcomeMessage (char*);
 	
-	monster* insertAlly (monster*); //add a new ally
-	monster* removeAlly (monster*); //remove a preexisting ally
-	monster* peekAllies (monster*); //view all allies
+	monster* fillPlayerRoster (monster*); //add a monster to player roster
+	//monster* removeAlly (monster*); //remove a preexisting ally
+	//monster* peekAllies (monster*); //view all allies
 	
-	int sizeAlly (monster*); //view the number of allies
-	int isEmptyAlly (monster*); //see if ally linked list is empty
+	int sizeList (monster*); //view the number of monsters
 	int randomNum (); //returns a random number from the API
 	
 	monster* fileIO ();
@@ -56,10 +56,13 @@ int main () {
 	//Populate Ememy array
 	
 	//Game Code = = = = = = = = = = = = = = = = =
-	welcomeMessage(playerName);
-	availableMonsterList = fileIO();
-	printList(availableMonsterList);
-	//END OF: Game Code
+	welcomeMessage(playerName); //welcome user
+	availableMonsterList = fileIO(); //import monsters
+	printList(availableMonsterList); //print available monsters
+	playerRoster = fillPlayerRoster(availableMonsterList); //add available monsters to roster
+	printList(playerRoster); //print player selected monsters
+	printf("\n\nYou have added a total of %d Monsters!\n\n",sizeList(playerRoster));
+	printf("============================================================\n\n");
 	
 } //END OF: main
 
@@ -85,6 +88,7 @@ void welcomeMessage(char* playerName) {
 	system("clear");
 	printf(BOLDCYAN "Welcome %s!\n" RESET, playerName);
 } //END OF: welcomeMessage
+
 
 
 
@@ -149,12 +153,16 @@ monster* fileIO () {
 
 //FUNCTION: printList = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 void printList(monster* n) {
+	int index = 1;
+	printf("\nThe available Monsters are...\n\n");
 	while(n != NULL) {
+		printf("%d ---- \t", index);
     	printf("Name: %s", n -> name);
-    	printf("Attack: %d\n", n -> attack);
-    	printf("Defence: %d\n", n -> defence);
-    	printf("Speed: %d\n", n -> speed);
+    	printf("\tAttack: %d\n", n -> attack);
+    	printf("\tDefence: %d\n", n -> defence);
+    	printf("\tSpeed: %d\n", n -> speed);
 		printf("\n");
+		index ++;
     	n = n -> next;
 	}
 	printf("\n");
@@ -162,11 +170,118 @@ void printList(monster* n) {
 
 
 
-//FUNCTION: insertAlly  = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+//FUNCTION: sizeList  = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+int sizeList (monster* head)
+{
+	//variables
+	monster* currentMonster = head;
+	int size = 0;
+	
+	//loop
+	while(currentMonster != NULL) {
+		currentMonster = currentMonster -> next;
+		size++;
+	}
+	
+	return size;
+} //END OF: sizeList
 
 
 
-//FUNCTION: removeAlly  = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+//FUNCTION: fillPlayerRoster  = = = = = = = = = = = = = = = = = = = = = = = = =
+monster* fillPlayerRoster (monster* importedMonsters) {
+	//variables
+	monster* head = NULL; //player list pointer to return
+	monster* currentMonster = importedMonsters;
+	int index; //variable to store user index choice
+	int count = 0; //variable to keep track of number of added monsters
+	
+	printf("============================================================\n\n");
+	printf("Please enter the numbers of the Monsters to add to your roster.\n");
+	printf("You may choose between 1 and 6 Monsters.\n");
+	printf("Enter '0' when you are done.\n\n");
+	
+	while (1 == 1) {
+		//reset monster list
+		currentMonster = importedMonsters;
+		
+		//read and check user input
+		int checking = 1;
+		int done = 0;
+		
+		while (checking == 1) {
+			//read user input
+			printf("Index: ");
+			scanf(" %d",&index);
+			
+			//break if 0 was entered to quit
+			if (index == 0) {
+				//return if 0 monsters have been entered
+				if (count == 0) {
+					printf("\nYou have not added any Monsters!\n\n");
+				} else {
+					done = 1;
+					break;
+				}
+			}
+			
+			//check for max of 6 monsters
+			if (count == 6) {
+				printf("\nYou have reached the maximum of 6 monsters.\n");
+				done = 1;
+				break;
+			}
+			
+			//check for invalid input
+			if (!(index <= sizeList(importedMonsters))) {
+				printf("\nYou have entered an invalid index.\n");
+				printf("Please enter a number between 1 and %d.",sizeList(importedMonsters));
+				printf("\nEnter 0 if you are done adding monsters.\n\n");
+			}
+			
+			if (!((index == 0) || (count == 6) || ((index > sizeList(importedMonsters))))) {
+				checking = 0;
+			}
+		}
+		
+		//check if done
+		if (done == 1) {
+			break;
+		}
+		
+		//save the entered monster to the list
+		monster* temp = (monster*) malloc(sizeof(monster)); //node to store data
+		int i = 1; //int to compare with desired index
+		
+		//cycle through imported list
+		while(currentMonster != NULL) {
+			//when at the desired monster
+			if (i == index) {
+				//copy data to node 
+				strcpy(temp->name, currentMonster -> name);
+				temp -> attack = currentMonster -> attack;
+				temp -> defence = currentMonster -> defence;
+				temp -> speed = currentMonster -> speed;
+				
+				//add to front of list
+				temp -> next = head;
+				head = temp;
+				
+				//increase count and break
+				count++;
+				printf("\t%s \twas added to your roster.\n\n",temp -> name);
+				break;
+			}
+			//continue cycling through if not at desired monster
+			currentMonster = currentMonster -> next;
+			i++;
+		}
+	}
+	return head;
+} //END OF: fillPlayerRoster
+
 
 
 
@@ -174,14 +289,13 @@ void printList(monster* n) {
 
 
 
-//FUNCTION: sizeAlly  = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-
 
 //FUNCTION: isEmptyAlly = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
 
+
 //FUNCTION: randomNum = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
 
 
