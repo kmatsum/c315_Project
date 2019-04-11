@@ -191,8 +191,7 @@ int sizeList (monster* head)
 
 
 //FUNCTION: fillPlayerRoster  = = = = = = = = = = = = = = = = = = = = = = = = =
-monster* fillPlayerRoster (monster* importedMonsters)
-{
+monster* fillPlayerRoster (monster* importedMonsters) {
 	//variables
 	monster* head = NULL; //player list pointer to return
 	monster* currentMonster = importedMonsters;
@@ -212,7 +211,7 @@ monster* fillPlayerRoster (monster* importedMonsters)
 		int checking = 1;
 		int done = 0;
 		
-		while (checking == 1){
+		while (checking == 1) {
 			//read user input
 			printf("Index: ");
 			scanf(" %d",&index);
@@ -222,8 +221,7 @@ monster* fillPlayerRoster (monster* importedMonsters)
 				//return if 0 monsters have been entered
 				if (count == 0) {
 					printf("\nYou have not added any Monsters!\n\n");
-				}
-				else {
+				} else {
 					done = 1;
 					break;
 				}
@@ -241,14 +239,17 @@ monster* fillPlayerRoster (monster* importedMonsters)
 				printf("\nYou have entered an invalid index.\n");
 				printf("Please enter a number between 1 and %d.",sizeList(importedMonsters));
 				printf("\nEnter 0 if you are done adding monsters.\n\n");
-			}	
-			if (!((index == 0) || (count == 6) || ((index > sizeList(importedMonsters)))))
+			}
+			
+			if (!((index == 0) || (count == 6) || ((index > sizeList(importedMonsters))))) {
 				checking = 0;
+			}
 		}
 		
 		//check if done
-		if (done == 1)
+		if (done == 1) {
 			break;
+		}
 		
 		//save the entered monster to the list
 		monster* temp = (monster*) malloc(sizeof(monster)); //node to store data
