@@ -20,6 +20,7 @@ typedef struct monster {
 //END OF: Monster Structure = = = = = = = = = = = = = = = = = = = = = = = =
 
 
+
 	
 //FUNCTION: main  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 int main () {	
@@ -30,8 +31,7 @@ int main () {
 	//monster* removeAlly (monster*); //remove a preexisting ally
 	//monster* peekAllies (monster*); //view all allies
 	
-	//int sizeAlly (monster*); //view the number of allies
-	//int isEmptyAlly (monster*); //see if ally linked list is empty
+	int sizeList (monster*); //view the number of monsters
 	int randomNum (); //returns a random number from the API
 	
 	monster* fileIO ();
@@ -61,6 +61,8 @@ int main () {
 	printList(availableMonsterList); //print available monsters
 	playerRoster = fillPlayerRoster(availableMonsterList); //add available monsters to roster
 	printList(playerRoster); //print player selected monsters
+	printf("\n\nYou have added a total of %d Monsters!\n\n",sizeList(playerRoster));
+	printf("============================================================\n\n");
 	
 } //END OF: main
 
@@ -86,6 +88,7 @@ void welcomeMessage(char* playerName) {
 	system("clear");
 	printf(BOLDCYAN "Welcome %s!\n" RESET, playerName);
 } //END OF: welcomeMessage
+
 
 
 
@@ -167,6 +170,26 @@ void printList(monster* n) {
 
 
 
+
+//FUNCTION: sizeList  = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+int sizeList (monster* head)
+{
+	//variables
+	monster* currentMonster = head;
+	int size = 0;
+	
+	//loop
+	while(currentMonster != NULL) {
+		currentMonster = currentMonster -> next;
+		size++;
+	}
+	
+	return size;
+} //END OF: sizeList
+
+
+
+
 //FUNCTION: fillPlayerRoster  = = = = = = = = = = = = = = = = = = = = = = = = =
 monster* fillPlayerRoster (monster* importedMonsters)
 {
@@ -184,29 +207,50 @@ monster* fillPlayerRoster (monster* importedMonsters)
 	while (1 == 1) {
 		//reset monster list
 		currentMonster = importedMonsters;
-		//read user input
-		printf("Index: ");
-		scanf(" %d",&index);
 		
-		//break if 0 was entered to quit
-		if (index == 0) {
-			//return if 0 monsters have been entered
-			if (count == 0) {
-				printf("\nYou have not added any Monsters!\n\n");
-				printf("Index: ");
-				scanf("%d",&index);
+		//read and check user input
+		int checking = 1;
+		int done = 0;
+		
+		while (checking == 1){
+			//read user input
+			printf("Index: ");
+			scanf(" %d",&index);
+			
+			//break if 0 was entered to quit
+			if (index == 0) {
+				//return if 0 monsters have been entered
+				if (count == 0) {
+					printf("\nYou have not added any Monsters!\n\n");
+				}
+				else {
+					done = 1;
+					break;
+				}
 			}
-			else 
+			
+			//check for max of 6 monsters
+			if (count == 6) {
+				printf("\nYou have reached the maximum of 6 monsters.\n");
+				done = 1;
 				break;
+			}
+			
+			//check for invalid input
+			if (!(index <= sizeList(importedMonsters))) {
+				printf("\nYou have entered an invalid index.\n");
+				printf("Please enter a number between 1 and %d.",sizeList(importedMonsters));
+				printf("\nEnter 0 if you are done adding monsters.\n\n");
+			}	
+			if (!((index == 0) || (count == 6) || ((index > sizeList(importedMonsters)))))
+				checking = 0;
 		}
 		
-		//check for max of 6 monsters
-		if (count == 6) {
-			printf("\nYou have reached the maximum of 6 monsters.\n");
+		//check if done
+		if (done == 1)
 			break;
-		}
 		
-		//else save the entered monster to the list
+		//save the entered monster to the list
 		monster* temp = (monster*) malloc(sizeof(monster)); //node to store data
 		int i = 1; //int to compare with desired index
 		
@@ -235,10 +279,8 @@ monster* fillPlayerRoster (monster* importedMonsters)
 		}
 	}
 	return head;
-}
+} //END OF: fillPlayerRoster
 
-
-//FUNCTION: fillPlayerRoster  = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
 
@@ -246,14 +288,13 @@ monster* fillPlayerRoster (monster* importedMonsters)
 
 
 
-//FUNCTION: sizeAlly  = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-
 
 //FUNCTION: isEmptyAlly = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
 
+
 //FUNCTION: randomNum = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
 
 
