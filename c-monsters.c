@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+//Use function randomNumberAPICall to get a value (Not finished yet)
+#include "api.h"
+
 #define RESET "\033[0m"
 #define BOLDRED "\033[1;31m"
 #define CYAN "\033[0;36m"
