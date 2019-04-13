@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define RESET "\033[0m"
 #define BOLDRED "\033[1;31m"
@@ -37,11 +38,15 @@ int main () {
 	
 	monster* fileIO (FILE*);
 	void printList (monster*);
+	
+	void calculateBattle (int, monster*, monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
 	
 	
 	//Variables = = = = = = = = = = = = = = = = =
+	srand(time(NULL));
+	
 	char playerName[20]; //create player name array 
 	monster enemies[4]; //create enemy array
 	monster* availableMonsterList = NULL; //List of ALL avilable monster for players to use
@@ -336,18 +341,63 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 
 
+void calculateBattle (int playerSelection, monster* currentEnemy, monster* currentPlayer) {
+	switch (playerSelection) {
+		//Set monstr to have a 50/50 chance of attacking or defending
+		int monsterChoice = ( rand() % 2 );
+		int damage = 0;
+		
+		//Attacking
+		case 1:
+			//If the monster is defending
+			if (monsterChoice == 1) {
+				printf("Your %s attacked the %s for %d!\n", currentPlayer -> name, currentEnemy -> name, currentPlayer -> attack);
+				printf("The %s defended for %d!\n", currentEnemy -> name, currentEnemy -> defence);
+				
+				damage = ( currentPlayer -> attack - currentEnemy -> defence );
+				
+				if ( damage <= 0 ) {
+					printf("The %s blocked all your %s's attack.\n", currentEnemy -> name, currentPlayer -> name);
+					return;
+				} else {
+					currentEnemy -> health -= damage;
+					printf("The %s was damaged %d HP!\n", currentEnemy -> name, damage);
+				}
+			} else {
+				//Check who attacks first
+				if (currentPlayer -> speed >= currentEnemy -> speed) {
+					damage = currentPlayer -> attack;
+					currentEnemy -> health -= damage;
+					printf("The %s took a full blow! Hit for %d!\n", currentEnemy -> name, damage);
+					
+					//Is enemy dead?
+					if (currentEnemy -> health == 0) {
+						printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
+						return;
+					} else {
+						damage = currentEnemy -> attack;
+						currentPlayer -> health -= damage;
+						printf("Your %s also took a full blow! Hit for %d!\n", currentPlayer -> name, damage);
+					}
+					
+					
+					
+				} else { //If the enemy has higher Speed
+					damage = currentEnemy -> attack;
+					currentPlayer -> health -= damage;
+					printf("Your %s took a full blow! Hit for %d!\n", currentPlayer -> name, damage);
 
-//FUNCTION: peekAllies  = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-
-
-
-//FUNCTION: isEmptyAlly = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-
-
-
-//FUNCTION: randomNum = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-
-
+					//Is player dead?
+					if (currentPlayer -> health == 0) {
+						printf("Your %s has no more HP! The %s fainted...\n\n", currentPlayer -> name, currentPlayer -> name);
+						return;
+					} else {
+						damage = currentEnemy -> attack;
+						currentPlayer -> health -= damage;
+						printf("The %s also took a full blow! Hit for %d!\n", currentEnemy -> name, damage);					
+					}
+				}
+			}
+			break;
+	}
+}
