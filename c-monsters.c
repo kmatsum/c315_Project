@@ -15,6 +15,7 @@ typedef struct monster {
 	int attack;
 	int defence;
 	int speed;
+	int health;
 	struct monster* next;
 } monster;
 //END OF: Monster Structure = = = = = = = = = = = = = = = = = = = = = = = =
@@ -130,6 +131,8 @@ monster* fileIO (FILE* MONSTERLIST) {
 	getline(&line, &bufsize, MONSTERLIST); //Read next line (All other interger stats)
 	sscanf(line, "%d\t%d\t%d", &(head -> attack), &(head -> defence), &(head -> speed)); //This uses the scanf function to read the input buffer as integers using %d
 
+	head -> health = 100;
+	
 	getline(&line, &bufsize, MONSTERLIST); //Read the empty line in the text file
 	
 	
@@ -144,6 +147,8 @@ monster* fileIO (FILE* MONSTERLIST) {
 	
 		getline(&line, &bufsize, MONSTERLIST); //Read next line (All other interger stats)
 		sscanf(line, "%d\t%d\t%d", &(temp -> attack), &(temp -> defence), &(temp -> speed));  //This uses the scanf function to read the input buffer as integers using %d
+		
+		temp -> health = 100;
 		
 		getline(&line, &bufsize, MONSTERLIST); //Read the empty line in the text file
 		
@@ -168,6 +173,7 @@ void printList(monster* n) {
     	printf("\tAttack: %d\n", n -> attack);
     	printf("\tDefence: %d\n", n -> defence);
     	printf("\tSpeed: %d\n", n -> speed);
+		printf("\tHealth: %d\n", n -> health);
 		printf("\n");
 		index ++;
     	n = n -> next;
@@ -272,6 +278,7 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 				temp -> attack = currentMonster -> attack;
 				temp -> defence = currentMonster -> defence;
 				temp -> speed = currentMonster -> speed;
+				temp -> health = currentMonster -> health;
 				
 				//add to front of list
 				temp -> next = head;
