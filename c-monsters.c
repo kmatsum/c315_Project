@@ -74,6 +74,43 @@ int main () {
 	printf("The monsters you are fighting are...\n\n");
 	printList(enemyLinkedList); //print enemy monster list
 	printf("============================================================\n\n");
+	
+	//Battle Logic = = = = = = = = = = = = = = = 
+	//set current monsters
+	currentPlayerMonster = playerRoster;
+	currentEnemyMonster = enemyLinkedList;
+	printf("The battle has BEGUN!\n\n");
+	printf("============================================================\n\n");
+	
+	//start while loop
+	int battling = 1;
+	char choice = 0;
+	while (battling == 1)
+	{
+		printf("Current battle contestants ...\n\n");
+		printf("\t%s \tVS \n\t%s\n",currentPlayerMonster->name,currentEnemyMonster->name);
+		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
+		scanf(" %c",&choice);
+		
+		switch (choice)
+		{
+			case '1':
+				break;
+				
+			case '2':
+				break;
+				
+			case '3':
+				break;
+				
+			default:
+				printf("\n============================================================\n");
+				printf("\nYou have entered invalid input.\nPlease enter 1, 2, or 3.\n\n");
+				printf("============================================================\n\n");
+				break;
+		}
+	}
+	
 } //END OF: main
 
 
