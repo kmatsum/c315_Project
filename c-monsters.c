@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define RESET "\033[0m"
 #define BOLDRED "\033[1;31m"
@@ -38,11 +39,15 @@ int main () {
 	monster* fileIO (FILE*);
 	void printList (monster*);
 	void status(monster*, monster*);
+  
+	void calculateBattle (int, monster*, monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
 	
 	
 	//Variables = = = = = = = = = = = = = = = = =
+	srand(time(NULL));
+	
 	char playerName[20]; //create player name array 
 	monster enemies[4]; //create enemy array
 	monster* availableMonsterList = NULL; //List of ALL avilable monster for players to use
@@ -75,6 +80,43 @@ int main () {
 	printf("The monsters you are fighting are...\n\n");
 	printList(enemyLinkedList); //print enemy monster list
 	printf("============================================================\n\n");
+	
+	//Battle Logic = = = = = = = = = = = = = = = 
+	//set current monsters
+	currentPlayerMonster = playerRoster;
+	currentEnemyMonster = enemyLinkedList;
+	printf("The battle has BEGUN!\n\n");
+	printf("============================================================\n\n");
+	
+	//start while loop
+	int battling = 1;
+	char choice = 0;
+	while (battling == 1)
+	{
+		printf("Current battle contestants ...\n\n");
+		printf("\t%s \tVS \n\t%s\n",currentPlayerMonster->name,currentEnemyMonster->name);
+		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
+		scanf(" %c",&choice);
+		
+		switch (choice)
+		{
+			case '1':
+				break;
+				
+			case '2':
+				break;
+				
+			case '3':
+				break;
+				
+			default:
+				printf("\n============================================================\n");
+				printf("\nYou have entered invalid input.\nPlease enter 1, 2, or 3.\n\n");
+				printf("============================================================\n\n");
+				break;
+		}
+	}
+	
 } //END OF: main
 
 
@@ -300,18 +342,69 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 
 
+void calculateBattle (int playerSelection, monster* currentPlayer, monster* currentEnemy) {
+	int monsterChoice = ( rand() % 2 );
+	int damage = 0;
+	
+	switch (playerSelection) {
+		//Set monstr to have a 50/50 chance of attacking or defending
+		
+		//Attacking
+		case 1:
+			//If the monster is defending
+			if (monsterChoice == 1) {
+				printf("Your %s attacked the %s for %d!\n", currentPlayer -> name, currentEnemy -> name, currentPlayer -> attack);
+				printf("The %s defended for %d!\n", currentEnemy -> name, currentEnemy -> defence);
+				
+				damage = ( currentPlayer -> attack - currentEnemy -> defence );
+				
+				if ( damage <= 0 ) {
+					printf("The %s blocked all your %s's attack.\n", currentEnemy -> name, currentPlayer -> name);
+				} else {
+					currentEnemy -> health -= damage;
+					printf("The %s was damaged %d HP!\n", currentEnemy -> name, damage);
+				}
+			} else {
+				//Check who attacks first
+				if (currentPlayer -> speed >= currentEnemy -> speed) {
+					damage = currentPlayer -> attack;
+					currentEnemy -> health -= damage;
+					printf("The %s took a full blow! Hit for %d!\n", currentEnemy -> name, damage);
+					
+					//Is enemy dead?
+					if (currentEnemy -> health == 0) {
+						printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
+						return;
+					} else {
+						damage = currentEnemy -> attack;
+						currentPlayer -> health -= damage;
+						printf("Your %s also took a full blow! Hit for %d!\n", currentPlayer -> name, damage);
+					}
+					
+					
+					
+				} else { //If the enemy has higher Speed
+					damage = currentEnemy -> attack;
+					currentPlayer -> health -= damage;
+					printf("Your %s took a full blow! Hit for %d!\n", currentPlayer -> name, damage);
 
-//FUNCTION: peekAllies  = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+					//Is player dead?
+					if (currentPlayer -> health == 0) {
+						printf("Your %s has no more HP! The %s fainted...\n\n", currentPlayer -> name, currentPlayer -> name);
+						return;
+					} else {
+						damage = currentEnemy -> attack;
+						currentPlayer -> health -= damage;
+						printf("The %s also took a full blow! Hit for %d!\n", currentEnemy -> name, damage);					
+					}
+				}
+			}
+			printf("============================================================\n\n");
+      break;
+	}
+}
 
 
-
-
-//FUNCTION: isEmptyAlly = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-
-
-
-//FUNCTION: randomNum = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 //FUNCTION: Status
 void status(monster* ally, monster* enemy) 
@@ -325,6 +418,3 @@ void status(monster* ally, monster* enemy)
 		printf("\tHealth: %d\n", enemy -> health);
 		printf("\n");
 }
-
-
-
