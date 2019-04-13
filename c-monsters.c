@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-//Use function randomNumberAPICall to get a value (Not finished yet)
-#include "api.h"
+//Use function randomNumberAPICall to get a value (Not finished yet). In order to compile correctly, type: gcc -Wall c-monsters.c  -lcurl -o "Whatever Name"
+//#include "api.h"
 
 #define RESET "\033[0m"
 #define BOLDRED "\033[1;31m"
@@ -41,7 +41,7 @@ int main () {
 	void printList (monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
-	
+	randomNumberAPICall();
 	
 	//Variables = = = = = = = = = = = = = = = = =
 	char playerName[20]; //create player name array 
