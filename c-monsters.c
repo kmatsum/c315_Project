@@ -443,7 +443,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 
 
 //Function: switchMonster = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-monster * switchMonster(int index, monster *head) {
+monster * switchMonster (int index, monster *head) {
 	
 	monster *temp = head;
 
