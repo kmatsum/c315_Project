@@ -46,7 +46,7 @@ int main () {
 	void calculateBattle (int, monster*, monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
-	randomNumberAPICall();
+	//randomNumberAPICall();
 	
 	//Variables = = = = = = = = = = = = = = = = =
 	srand(time(NULL));
