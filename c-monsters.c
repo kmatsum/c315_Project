@@ -3,6 +3,10 @@
 #include <string.h>
 #include <time.h>
 
+//Function from api is randomNumberAPICall().In order to compile correctly, enter in -lcurl after normal compilation  "gcc -o NAME c-monsters.c -lcurl"
+//Uncomment below line to use the api
+//#include "api.h"
+
 #define RESET "\033[0m"
 #define BOLDRED "\033[1;31m"
 #define CYAN "\033[0;36m"
