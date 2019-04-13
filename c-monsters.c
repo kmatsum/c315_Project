@@ -3,6 +3,9 @@
 #include <string.h>
 #include <time.h>
 
+//Use function randomNumberAPICall to get a value (Not finished yet). In order to compile correctly, type: gcc -Wall c-monsters.c  -lcurl -o "Whatever Name"
+//#include "api.h"
+
 #define RESET "\033[0m"
 #define BOLDRED "\033[1;31m"
 #define CYAN "\033[0;36m"
@@ -38,11 +41,12 @@ int main () {
 	
 	monster* fileIO (FILE*);
 	void printList (monster*);
-	
+	void status(monster*, monster*);
+  
 	void calculateBattle (int, monster*, monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
-	
+	//randomNumberAPICall();
 	
 	//Variables = = = = = = = = = = = = = = = = =
 	srand(time(NULL));
@@ -62,7 +66,7 @@ int main () {
 	
 	
 	//Populate Variables  = = = = = = = = = = = =
-	//Populate Ememy array
+	//Populate Enemy array
 	
 	//Game Code = = = = = = = = = = = = = = = = =
 	welcomeMessage(playerName); //welcome user
@@ -92,7 +96,7 @@ int main () {
 	int choice = 0;
 	while (battling == 1) {
 		printf("Current battle contestants ...\n\n");
-		printf("\t%s \tVS \n\t%s\n",currentPlayerMonster->name,currentEnemyMonster->name);
+		status(currentPlayerMonster, currentEnemyMonster);
 		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
 		scanf("%d",&choice);
 		
@@ -116,7 +120,6 @@ int main () {
 				break;
 		}
 	}
-	
 } //END OF: main
 
 
@@ -251,6 +254,7 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 	//variables
 	monster* head = NULL; //player list pointer to return
 	monster* currentMonster = importedMonsters;
+	monster* currentPlayerRoster = head; //set current player roster to head
 	int index; //variable to store user index choice
 	int count = 0; //variable to keep track of number of added monsters
 	
@@ -323,9 +327,16 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 				temp -> speed = currentMonster -> speed;
 				temp -> health = currentMonster -> health;
 				
-				//add to front of list
-				temp -> next = head;
-				head = temp;
+				//if the first one
+				if (currentPlayerRoster == NULL){
+					currentPlayerRoster = temp;
+					head = currentPlayerRoster;
+				}
+				else{
+					//add to end of list
+					currentPlayerRoster -> next = temp;
+					currentPlayerRoster = currentPlayerRoster -> next;
+				}
 				
 				//increase count and break
 				count++;
@@ -343,11 +354,9 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 
 void calculateBattle (int playerSelection, monster* currentPlayer, monster* currentEnemy) {
-	//Set monstr to have a 50/50 chance of attacking or defending
+	//Set monster to have a 50/50 chance of attacking or defending
 	int monsterChoice = ( rand() % 2 );
 	int damage = 0;
-	
-	
 	
 	switch (playerSelection) {
 		//Attacking
@@ -419,6 +428,42 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					printf("The %s was damaged %d HP!\n", currentPlayer -> name, damage);
 				}
 			}
-			break;
+			printf("============================================================\n\n");
+      break;
 	}
+}
+
+
+//Function: switchMonster = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+monster * switchMonster(int index, monster *head) {
+	
+	monster *temp = head;
+
+	//Assuming that we don't consider 0 to be a position
+	while(index != 0) {
+		temp = temp->next;
+		index--;
+	}
+
+	if(temp->health <= 0) {
+		printf("Monster has no health and cannot be swapped in.\n");
+		return NULL;
+	}
+	
+	return temp;
+} //End of: switchMonster
+
+
+
+//FUNCTION: Status
+void status(monster* ally, monster* enemy) {
+    printf("Your monster is: %s", ally -> name);
+		printf("\tHealth: %d\n", ally -> health);
+		
+		printf("V.S.");
+		
+		printf("The enemy monster is: %s", enemy -> name);
+		printf("\tHealth: %d\n", enemy -> health);
+		printf("\n");
 }
