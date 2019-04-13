@@ -310,6 +310,7 @@ monster * switchMonster(int index, monster *head)
 		return NULL;
 	}
 	
+	//Assuming that we don't consider 0 to be a position
 	while(index != 0)
 	{
 		temp = temp->next;
