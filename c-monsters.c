@@ -144,6 +144,8 @@ void welcomeMessage(char* playerName) {
 	printf(BOLDCYAN "Welcome %s!\n" RESET, playerName);
 } //END OF: welcomeMessage
 
+
+
 //FUNCTION: pauseOutput = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 void pauseOutput() {	
 	printf (CYANBLINK "Press ENTER To Continue!\n" RESET);
@@ -151,6 +153,8 @@ void pauseOutput() {
 	getchar();
 	system("clear");
 }//END Of: pauseOutput
+
+
 
 //FUNCTION: FileIO  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 monster* fileIO (FILE* MONSTERLIST) {
