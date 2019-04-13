@@ -89,23 +89,23 @@ int main () {
 	
 	//start while loop
 	int battling = 1;
-	char choice = 0;
-	while (battling == 1)
-	{
+	int choice = 0;
+	while (battling == 1) {
 		printf("Current battle contestants ...\n\n");
 		printf("\t%s \tVS \n\t%s\n",currentPlayerMonster->name,currentEnemyMonster->name);
 		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
-		scanf(" %c",&choice);
+		scanf("%d",&choice);
 		
-		switch (choice)
-		{
-			case '1':
+		switch (choice) {
+			//Attack
+			case 1:
+				calculateBattle(choice, currentPlayerMonster, currentEnemyMonster);
 				break;
 				
-			case '2':
+			case 2:
 				break;
 				
-			case '3':
+			case 3:
 				break;
 				
 			default:
@@ -341,12 +341,14 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 
 
-void calculateBattle (int playerSelection, monster* currentEnemy, monster* currentPlayer) {
+void calculateBattle (int playerSelection, monster* currentPlayer, monster* currentEnemy) {
+	//Set monstr to have a 50/50 chance of attacking or defending
+	int monsterChoice = ( rand() % 2 );
+	int damage = 0;
+	
+	
+	
 	switch (playerSelection) {
-		//Set monstr to have a 50/50 chance of attacking or defending
-		int monsterChoice = ( rand() % 2 );
-		int damage = 0;
-		
 		//Attacking
 		case 1:
 			//If the monster is defending
@@ -358,7 +360,6 @@ void calculateBattle (int playerSelection, monster* currentEnemy, monster* curre
 				
 				if ( damage <= 0 ) {
 					printf("The %s blocked all your %s's attack.\n", currentEnemy -> name, currentPlayer -> name);
-					return;
 				} else {
 					currentEnemy -> health -= damage;
 					printf("The %s was damaged %d HP!\n", currentEnemy -> name, damage);
@@ -398,6 +399,12 @@ void calculateBattle (int playerSelection, monster* currentEnemy, monster* curre
 					}
 				}
 			}
+			printf("\n======================================================\n\n");
 			break;
+			
+		case 2:
+		
+			break;
+			
 	}
 }
