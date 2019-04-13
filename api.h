@@ -62,7 +62,7 @@ int randomNumberAPICall()
     CURLcode res;
     string_buffer_t strbuf;
 
-    char * myurl = "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new";;
+    char * myurl = "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=html&rnd=new";;
 
     string_buffer_initialize( &strbuf );
 
