@@ -103,6 +103,7 @@ int main () {
 				break;
 				
 			case 2:
+				calculateBattle(choice, currentPlayerMonster, currentEnemyMonster);
 				break;
 				
 			case 3:
@@ -352,7 +353,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 		//Attacking
 		case 1:
 			//If the monster is defending
-			if (monsterChoice == 1) {
+			if ( monsterChoice == 1 ) {
 				printf("Your %s attacked the %s for %d!\n", currentPlayer -> name, currentEnemy -> name, currentPlayer -> attack);
 				printf("The %s defended for %d!\n", currentEnemy -> name, currentEnemy -> defence);
 				
@@ -372,7 +373,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					printf("The %s took a full blow! Hit for %d!\n", currentEnemy -> name, damage);
 					
 					//Is enemy dead?
-					if (currentEnemy -> health == 0) {
+					if ( currentEnemy -> health == 0 ) {
 						printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
 						return;
 					} else {
@@ -403,7 +404,21 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 			break;
 			
 		case 2:
-		
+			if ( monsterChoice == 1 ) {
+				printf("Both monsters took a defensive stance! Nothing occured!\n");
+			} else {
+				printf("The %s attacked the %s for %d!\n", currentEnemy -> name, currentPlayer -> name, currentPlayer -> attack);
+				printf("The %s defended for %d!\n", currentPlayer -> name, currentPlayer -> defence);
+				
+				damage = ( currentEnemy -> attack - currentPlayer -> defence );
+				
+				if ( damage <= 0 ) {
+					printf("You %s blocked all of the %s's attack.\n", currentPlayer -> name, currentEnemy -> name);
+				} else {
+					currentPlayer -> health -= damage;
+					printf("The %s was damaged %d HP!\n", currentPlayer -> name, damage);
+				}
+			}
 			break;
 			
 	}
