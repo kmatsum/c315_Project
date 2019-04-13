@@ -304,17 +304,18 @@ monster * switchMonster(int index, monster *head)
 {
 	
 	monster *temp = head;
-	if(head->health <= 0)
-	{
-		printf("Monster has no health and cannot be swapped in.\n");
-		return NULL;
-	}
-	
+
 	//Assuming that we don't consider 0 to be a position
 	while(index != 0)
 	{
 		temp = temp->next;
 		index--;
+	}
+
+	if(temp->health <= 0)
+	{
+		printf("Monster has no health and cannot be swapped in.\n");
+		return NULL;
 	}
 	
 	return temp;
