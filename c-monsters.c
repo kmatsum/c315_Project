@@ -53,7 +53,7 @@ int main () {
 	
 	
 	//Populate Variables  = = = = = = = = = = = =
-	//Populate Ememy array
+	//Populate Enemy array
 	
 	//Game Code = = = = = = = = = = = = = = = = =
 	welcomeMessage(playerName); //welcome user
@@ -298,4 +298,23 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 //FUNCTION: randomNum = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
+//Function: switchMonster = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
+monster * switchMonster(int index, monster *head)
+{
+	
+	monster *temp = head;
+	if(head->health <= 0)
+	{
+		printf("Monster has no health and cannot be swapped in.\n");
+		return NULL;
+	}
+	
+	while(index != 0)
+	{
+		temp = temp->next;
+		index--;
+	}
+	
+	return temp;
+} //End of: switchMonster
