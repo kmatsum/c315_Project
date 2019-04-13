@@ -38,7 +38,8 @@ int main () {
 	
 	monster* fileIO (FILE*);
 	void printList (monster*);
-	
+	void status(monster*, monster*);
+  
 	void calculateBattle (int, monster*, monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
@@ -399,8 +400,21 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 				}
 			}
 			printf("============================================================\n\n");
-
-			
-			break;
+      break;
 	}
+}
+
+
+
+//FUNCTION: Status
+void status(monster* ally, monster* enemy) 
+{
+    	printf("Your monster is: %s", ally -> name);
+		printf("\tHealth: %d\n", ally -> health);
+		
+		printf("V.S.");
+		
+		printf("Your monster is: %s", enemy -> name);
+		printf("\tHealth: %d\n", enemy -> health);
+		printf("\n");
 }
