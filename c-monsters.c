@@ -251,6 +251,7 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 	//variables
 	monster* head = NULL; //player list pointer to return
 	monster* currentMonster = importedMonsters;
+	monster* currentPlayerRoster = head; //set current player roster to head
 	int index; //variable to store user index choice
 	int count = 0; //variable to keep track of number of added monsters
 	
@@ -323,9 +324,16 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 				temp -> speed = currentMonster -> speed;
 				temp -> health = currentMonster -> health;
 				
-				//add to front of list
-				temp -> next = head;
-				head = temp;
+				//if the first one
+				if (currentPlayerRoster == NULL){
+					currentPlayerRoster = temp;
+					head = currentPlayerRoster;
+				}
+				else{
+					//add to end of list
+					currentPlayerRoster -> next = temp;
+					currentPlayerRoster = currentPlayerRoster -> next;
+				}
 				
 				//increase count and break
 				count++;
