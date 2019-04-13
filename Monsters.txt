@@ -7,7 +7,7 @@ Squirtle
 Bulbasaur
 10	10	10
 
-Pokemon
+Pikachu
 10	10	10
 
 Blastoise
