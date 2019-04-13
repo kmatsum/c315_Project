@@ -97,7 +97,7 @@ int main () {
 	while (battling == 1)
 	{
 		printf("Current battle contestants ...\n\n");
-		printf("\t%s \tVS \n\t%s\n",currentPlayerMonster->name,currentEnemyMonster->name);
+		status(currentPlayerMonster, currentEnemyMonster);
 		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
 		scanf(" %c",&choice);
 		
@@ -119,7 +119,6 @@ int main () {
 				break;
 		}
 	}
-	
 } //END OF: main
 
 
