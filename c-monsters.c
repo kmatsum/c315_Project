@@ -44,6 +44,7 @@ int main () {
 	void status(monster*, monster*);
   
 	void calculateBattle (int, monster*, monster*);
+	monster * switchMonster (int, monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
 	//randomNumberAPICall();
@@ -100,17 +101,23 @@ int main () {
 		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
 		scanf("%d",&choice);
 		
+		printf("\n============================================================\n\n");
+		
 		switch (choice) {
 			//Attack
 			case 1:
 				calculateBattle(choice, currentPlayerMonster, currentEnemyMonster);
 				break;
-				
+			//Defend
 			case 2:
 				calculateBattle(choice, currentPlayerMonster, currentEnemyMonster);
 				break;
 				
 			case 3:
+				//Ask for input on which monster to choose from:
+				
+				//Switch Current Monster
+				//currentPlayerMonster = switchMonster (INDEX, playerRoster);
 				break;
 				
 			default:
@@ -381,6 +388,11 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 				} else {
 					currentEnemy -> health -= damage;
 					printf("The %s was damaged %d HP!\n", currentEnemy -> name, damage);
+					//Is enemy dead?
+					if ( currentEnemy -> health <= 0 ) {
+						currentEnemy -> health = 0;
+						printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
+					}
 				}
 			} else {
 				//Check who attacks first
@@ -390,9 +402,9 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					printf("The %s took a full blow! Hit for %d!\n", currentEnemy -> name, damage);
 					
 					//Is enemy dead?
-					if ( currentEnemy -> health == 0 ) {
+					if ( currentEnemy -> health <= 0 ) {
+						currentEnemy -> health = 0;
 						printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
-						return;
 					} else {
 						damage = currentEnemy -> attack;
 						currentPlayer -> health -= damage;
@@ -407,7 +419,8 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					printf("Your %s took a full blow! Hit for %d!\n", currentPlayer -> name, damage);
 
 					//Is player dead?
-					if (currentPlayer -> health == 0) {
+					if (currentPlayer -> health <= 0) {
+						currentPlayer -> health = 0;
 						printf("Your %s has no more HP! The %s fainted...\n\n", currentPlayer -> name, currentPlayer -> name);
 						return;
 					} else {
@@ -417,7 +430,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					}
 				}
 			}
-			printf("\n======================================================\n\n");
+			printf("\n============================================================\n\n");
 			break;
 			
 		case 2:
@@ -436,7 +449,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					printf("The %s was damaged %d HP!\n", currentPlayer -> name, damage);
 				}
 			}
-			printf("============================================================\n\n");
+			printf("\n============================================================\n\n");
       break;
 	}
 }
@@ -468,7 +481,7 @@ void status(monster* ally, monster* enemy) {
     printf("Your monster is: %s", ally -> name);
 		printf("\tHealth: %d\n", ally -> health);
 		
-		printf("V.S.");
+		printf("V.S.\n");
 		
 		printf("The enemy monster is: %s", enemy -> name);
 		printf("\tHealth: %d\n", enemy -> health);
