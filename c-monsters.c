@@ -3,6 +3,9 @@
 #include <string.h>
 #include <time.h>
 
+//Use function randomNumberAPICall to get a value (Not finished yet). In order to compile correctly, type: gcc -Wall c-monsters.c  -lcurl -o "Whatever Name"
+//#include "api.h"
+
 #define RESET "\033[0m"
 #define BOLDRED "\033[1;31m"
 #define CYAN "\033[0;36m"
@@ -43,7 +46,7 @@ int main () {
 	void calculateBattle (int, monster*, monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
-	
+	randomNumberAPICall();
 	
 	//Variables = = = = = = = = = = = = = = = = =
 	srand(time(NULL));
@@ -63,7 +66,7 @@ int main () {
 	
 	
 	//Populate Variables  = = = = = = = = = = = =
-	//Populate Ememy array
+	//Populate Enemy array
 	
 	//Game Code = = = = = = = = = = = = = = = = =
 	welcomeMessage(playerName); //welcome user
@@ -405,11 +408,31 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 }
 
 
+//Function: switchMonster = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+monster * switchMonster(int index, monster *head) {
+	
+	monster *temp = head;
+
+	//Assuming that we don't consider 0 to be a position
+	while(index != 0) {
+		temp = temp->next;
+		index--;
+	}
+
+	if(temp->health <= 0) {
+		printf("Monster has no health and cannot be swapped in.\n");
+		return NULL;
+	}
+	
+	return temp;
+} //End of: switchMonster
+
+
 
 //FUNCTION: Status
-void status(monster* ally, monster* enemy) 
-{
-    	printf("Your monster is: %s", ally -> name);
+void status(monster* ally, monster* enemy) {
+    printf("Your monster is: %s", ally -> name);
 		printf("\tHealth: %d\n", ally -> health);
 		
 		printf("V.S.");
