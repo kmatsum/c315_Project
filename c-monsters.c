@@ -414,7 +414,7 @@ void status(monster* ally, monster* enemy)
 		
 		printf("V.S.");
 		
-		printf("Your monster is: %s", enemy -> name);
+		printf("The enemy monster is: %s", enemy -> name);
 		printf("\tHealth: %d\n", enemy -> health);
 		printf("\n");
 }
