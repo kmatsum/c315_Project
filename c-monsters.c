@@ -37,6 +37,7 @@ int main () {
 	
 	monster* fileIO (FILE*);
 	void printList (monster*);
+	void status(monster*, monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
 	
@@ -311,6 +312,19 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 
 //FUNCTION: randomNum = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+//FUNCTION: Status
+void status(monster* ally, monster* enemy) 
+{
+    	printf("Your monster is: %s", ally -> name);
+		printf("\tHealth: %d\n", ally -> health);
+		
+		printf("V.S.");
+		
+		printf("Your monster is: %s", enemy -> name);
+		printf("\tHealth: %d\n", enemy -> health);
+		printf("\n");
+}
 
 
 
