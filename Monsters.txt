@@ -1,11 +1,17 @@
 Charizard
 30	20	10
 
-Squirttle
-50	30	5
+Squirtle
+20	30	20
 
 Bulbasaur
 10	10	10
 
-Pokemonr
+Pokemon
 10	10	10
+
+Blastoise
+40	30	5
+
+Wartortle
+30	30	10

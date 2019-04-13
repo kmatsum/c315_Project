@@ -34,7 +34,7 @@ int main () {
 	int sizeList (monster*); //view the number of monsters
 	int randomNum (); //returns a random number from the API
 	
-	monster* fileIO ();
+	monster* fileIO (FILE*);
 	void printList (monster*);
 	//END OF: Function Prototypes = = = = = = = =
 	
@@ -45,9 +45,12 @@ int main () {
 	monster enemies[4]; //create enemy array
 	monster* availableMonsterList = NULL; //List of ALL avilable monster for players to use
 	monster* playerRoster = NULL; //create ally linked list
+	monster* enemyLinkedList = NULL; //create enemy linked list
 	monster* currentPlayerMonster = NULL; //create current ally pointer
 	monster* currentEnemyMonster = NULL; //Create current ally pointer
 	int currentEnemy; //index of current enemy
+	FILE* MONSTERLIST = fopen("Monsters.txt", "r"); //Player Monster File Variable
+	FILE* ENEMYLIST = fopen("Enemies.txt", "r"); //Enemy File Variable
 	//END OF: Variables = = = = = = = = = = = = =
 	
 	
@@ -57,13 +60,19 @@ int main () {
 	
 	//Game Code = = = = = = = = = = = = = = = = =
 	welcomeMessage(playerName); //welcome user
-	availableMonsterList = fileIO(); //import monsters
+	availableMonsterList = fileIO(MONSTERLIST); //import monsters to available monsters list
+	enemyLinkedList = fileIO(ENEMYLIST); //import monsters to enemy list
+	printf("\nThe available monsters are...\n\n");	
 	printList(availableMonsterList); //print available monsters
 	playerRoster = fillPlayerRoster(availableMonsterList); //add available monsters to roster
+	printf("\n============================================================\n\n");
+	printf("The monsters you have added are...\n\n");
 	printList(playerRoster); //print player selected monsters
-	printf("\n\nYou have added a total of %d Monsters!\n\n",sizeList(playerRoster));
+	printf("You have added a total of %d Monsters!\n",sizeList(playerRoster));
+	printf("\n============================================================\n\n");
+	printf("The monsters you are fighting are...\n\n");
+	printList(enemyLinkedList); //print enemy monster list
 	printf("============================================================\n\n");
-	
 } //END OF: main
 
 
@@ -93,9 +102,8 @@ void welcomeMessage(char* playerName) {
 
 
 //FUNCTION: FileIO  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-monster* fileIO () {
+monster* fileIO (FILE* MONSTERLIST) {
 	//Variables
-	FILE *MONSTERLIST = fopen("Monsters.txt", "r"); //File Variable
 	char* line; //Charachter array start pointer
 	size_t bufsize = 256; //Size of the Stream buffer
 	
@@ -144,7 +152,7 @@ monster* fileIO () {
 		current = temp;
 	}
 	
-	//Return the head of the entire monsersLinkedList
+	//Return the head of the entire monstersLinkedList
 	return head;
 } //END OF: FileIO
 
@@ -154,7 +162,6 @@ monster* fileIO () {
 //FUNCTION: printList = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 void printList(monster* n) {
 	int index = 1;
-	printf("\nThe available Monsters are...\n\n");
 	while(n != NULL) {
 		printf("%d ---- \t", index);
     	printf("Name: %s", n -> name);
@@ -212,6 +219,14 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 		int done = 0;
 		
 		while (checking == 1) {
+			
+			//check for max of 6 monsters
+			if (count == 6) {
+				printf("\nYou have reached the maximum of 6 monsters.\n");
+				done = 1;
+				break;
+			}
+			
 			//read user input
 			printf("Index: ");
 			scanf(" %d",&index);
@@ -225,13 +240,6 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 					done = 1;
 					break;
 				}
-			}
-			
-			//check for max of 6 monsters
-			if (count == 6) {
-				printf("\nYou have reached the maximum of 6 monsters.\n");
-				done = 1;
-				break;
 			}
 			
 			//check for invalid input
