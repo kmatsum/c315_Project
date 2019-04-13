@@ -420,6 +420,5 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 				}
 			}
 			break;
-			
 	}
 }
