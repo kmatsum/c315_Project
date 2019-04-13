@@ -341,11 +341,12 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 
 
-void calculateBattle (int playerSelection, monster* currentEnemy, monster* currentPlayer) {
+void calculateBattle (int playerSelection, monster* currentPlayer, monster* currentEnemy) {
+	int monsterChoice = ( rand() % 2 );
+	int damage = 0;
+	
 	switch (playerSelection) {
 		//Set monstr to have a 50/50 chance of attacking or defending
-		int monsterChoice = ( rand() % 2 );
-		int damage = 0;
 		
 		//Attacking
 		case 1:
@@ -358,7 +359,6 @@ void calculateBattle (int playerSelection, monster* currentEnemy, monster* curre
 				
 				if ( damage <= 0 ) {
 					printf("The %s blocked all your %s's attack.\n", currentEnemy -> name, currentPlayer -> name);
-					return;
 				} else {
 					currentEnemy -> health -= damage;
 					printf("The %s was damaged %d HP!\n", currentEnemy -> name, damage);
@@ -398,6 +398,9 @@ void calculateBattle (int playerSelection, monster* currentEnemy, monster* curre
 					}
 				}
 			}
+			printf("============================================================\n\n");
+
+			
 			break;
 	}
 }
