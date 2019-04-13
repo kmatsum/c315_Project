@@ -93,23 +93,24 @@ int main () {
 	
 	//start while loop
 	int battling = 1;
-	char choice = 0;
-	while (battling == 1)
-	{
+	int choice = 0;
+	while (battling == 1) {
 		printf("Current battle contestants ...\n\n");
 		status(currentPlayerMonster, currentEnemyMonster);
 		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
-		scanf(" %c",&choice);
+		scanf("%d",&choice);
 		
-		switch (choice)
-		{
-			case '1':
+		switch (choice) {
+			//Attack
+			case 1:
+				calculateBattle(choice, currentPlayerMonster, currentEnemyMonster);
 				break;
 				
-			case '2':
+			case 2:
+				calculateBattle(choice, currentPlayerMonster, currentEnemyMonster);
 				break;
 				
-			case '3':
+			case 3:
 				break;
 				
 			default:
@@ -353,16 +354,15 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 
 void calculateBattle (int playerSelection, monster* currentPlayer, monster* currentEnemy) {
+	//Set monster to have a 50/50 chance of attacking or defending
 	int monsterChoice = ( rand() % 2 );
 	int damage = 0;
 	
 	switch (playerSelection) {
-		//Set monstr to have a 50/50 chance of attacking or defending
-		
 		//Attacking
 		case 1:
 			//If the monster is defending
-			if (monsterChoice == 1) {
+			if ( monsterChoice == 1 ) {
 				printf("Your %s attacked the %s for %d!\n", currentPlayer -> name, currentEnemy -> name, currentPlayer -> attack);
 				printf("The %s defended for %d!\n", currentEnemy -> name, currentEnemy -> defence);
 				
@@ -382,7 +382,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					printf("The %s took a full blow! Hit for %d!\n", currentEnemy -> name, damage);
 					
 					//Is enemy dead?
-					if (currentEnemy -> health == 0) {
+					if ( currentEnemy -> health == 0 ) {
 						printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
 						return;
 					} else {
@@ -407,6 +407,25 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 						currentPlayer -> health -= damage;
 						printf("The %s also took a full blow! Hit for %d!\n", currentEnemy -> name, damage);					
 					}
+				}
+			}
+			printf("\n======================================================\n\n");
+			break;
+			
+		case 2:
+			if ( monsterChoice == 1 ) {
+				printf("Both monsters took a defensive stance! Nothing occured!\n");
+			} else {
+				printf("The %s attacked the %s for %d!\n", currentEnemy -> name, currentPlayer -> name, currentPlayer -> attack);
+				printf("The %s defended for %d!\n", currentPlayer -> name, currentPlayer -> defence);
+				
+				damage = ( currentEnemy -> attack - currentPlayer -> defence );
+				
+				if ( damage <= 0 ) {
+					printf("You %s blocked all of the %s's attack.\n", currentPlayer -> name, currentEnemy -> name);
+				} else {
+					currentPlayer -> health -= damage;
+					printf("The %s was damaged %d HP!\n", currentPlayer -> name, damage);
 				}
 			}
 			printf("============================================================\n\n");
