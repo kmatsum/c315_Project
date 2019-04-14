@@ -17,7 +17,7 @@
 typedef struct monster {
 	char name[64];
 	int attack;
-	int defence;
+	int defense;
 	int speed;
 	int health;
 	struct monster* next;
@@ -70,11 +70,12 @@ int main () {
 	//Populate Enemy array
 	
 	//Game Code = = = = = = = = = = = = = = = = =
+	system("clear");
 	welcomeMessage(playerName); //welcome user
 	availableMonsterList = fileIO(MONSTERLIST); //import monsters to available monsters list
 	enemyLinkedList = fileIO(ENEMYLIST); //import monsters to enemy list
-	printf("\nThe available monsters are...\n\n");	
-	printList(availableMonsterList); //print available monsters
+	//printf("\nThe available monsters are...\n\n");	
+	//printList(availableMonsterList); //print available monsters
 	playerRoster = fillPlayerRoster(availableMonsterList); //add available monsters to roster
 	printf("\n============================================================\n\n");
 	printf("The monsters you have added are...\n\n");
@@ -89,13 +90,14 @@ int main () {
 	//set current monsters
 	currentPlayerMonster = playerRoster;
 	currentEnemyMonster = enemyLinkedList;
-	printf("The battle has BEGUN!\n\n");
-	printf("============================================================\n\n");
+	printf("The battle has BEGUN!\n");
 	
 	//start while loop
 	int battling = 1;
 	int choice = 0;
-	while (battling == 1) {
+	while (battling == 1) {		
+		printf("\n============================================================\n\n");
+
 		printf("Current battle contestants ...\n\n");
 		status(currentPlayerMonster, currentEnemyMonster);
 		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
@@ -114,16 +116,43 @@ int main () {
 				break;
 				
 			case 3:
-				//Ask for input on which monster to choose from:
+				system("clear");
+				printf("\n============================================================\n\n");
 				
-				//Switch Current Monster
-				//currentPlayerMonster = switchMonster (INDEX, playerRoster);
+				//Ask for input on which monster to choose from:
+				printf("Which monster would you like to switch out your curently battling monster with?\n");
+				printList(playerRoster);
+				
+				int switchIndex = 0;
+				monster* tempSwitchMonster = NULL;
+			
+				scanf("%d", &switchIndex);
+				
+				tempSwitchMonster = switchMonster(switchIndex, playerRoster);
+				
+				while (NULL == tempSwitchMonster || tempSwitchMonster == currentPlayerMonster) {
+					system("clear");
+					
+					if (currentPlayerMonster == tempSwitchMonster) {
+						printf("\n============================================================\n\n");
+						printList(playerRoster);
+						printf("That monster is already out on the battlefield!\nPlease Select another:\n");
+						scanf("%d", &switchIndex);
+					} else {
+						printf("\n============================================================\n\n");
+						printList(playerRoster);
+						printf("Please select a valid monster...\n");
+						scanf("%d", &switchIndex);
+					}
+					tempSwitchMonster = switchMonster(switchIndex, playerRoster);
+				}
+				
+				currentPlayerMonster = tempSwitchMonster;
+				
 				break;
 				
 			default:
-				printf("\n============================================================\n");
 				printf("\nYou have entered invalid input.\nPlease enter 1, 2, or 3.\n\n");
-				printf("============================================================\n\n");
 				break;
 		}
 	}
@@ -190,7 +219,7 @@ monster* fileIO (FILE* MONSTERLIST) {
 	strcpy(head -> name, line); //Store first line into the first node of the linked list
 	
 	getline(&line, &bufsize, MONSTERLIST); //Read next line (All other interger stats)
-	sscanf(line, "%d\t%d\t%d", &(head -> attack), &(head -> defence), &(head -> speed)); //This uses the scanf function to read the input buffer as integers using %d
+	sscanf(line, "%d\t%d\t%d", &(head -> attack), &(head -> defense), &(head -> speed)); //This uses the scanf function to read the input buffer as integers using %d
 
 	head -> health = 100;
 	
@@ -207,7 +236,7 @@ monster* fileIO (FILE* MONSTERLIST) {
 		strcpy(temp -> name, line); //Store first line into the first node of the linked list
 	
 		getline(&line, &bufsize, MONSTERLIST); //Read next line (All other interger stats)
-		sscanf(line, "%d\t%d\t%d", &(temp -> attack), &(temp -> defence), &(temp -> speed));  //This uses the scanf function to read the input buffer as integers using %d
+		sscanf(line, "%d\t%d\t%d", &(temp -> attack), &(temp -> defense), &(temp -> speed));  //This uses the scanf function to read the input buffer as integers using %d
 		
 		temp -> health = 100;
 		
@@ -231,15 +260,14 @@ void printList(monster* n) {
 	while(n != NULL) {
 		printf("%d ---- \t", index);
     	printf("Name: %s", n -> name);
-    	printf("\tAttack: %d\n", n -> attack);
-    	printf("\tDefence: %d\n", n -> defence);
-    	printf("\tSpeed: %d\n", n -> speed);
 		printf("\tHealth: %d\n", n -> health);
+    	printf("\tAttack: %d\n", n -> attack);
+    	printf("\tDefense: %d\n", n -> defense);
+    	printf("\tSpeed: %d\n", n -> speed);
 		printf("\n");
 		index ++;
     	n = n -> next;
 	}
-	printf("\n");
 } //END OF: printList
 
 
@@ -268,17 +296,30 @@ int sizeList (monster* head)
 monster* fillPlayerRoster (monster* importedMonsters) {
 	//variables
 	monster* head = NULL; //player list pointer to return
-	monster* currentMonster = importedMonsters;
+	monster* currentMonster = NULL;
 	monster* currentPlayerRoster = head; //set current player roster to head
 	int index; //variable to store user index choice
 	int count = 0; //variable to keep track of number of added monsters
 	
-	printf("============================================================\n\n");
-	printf("Please enter the numbers of the Monsters to add to your roster.\n");
-	printf("You may choose between 1 and 6 Monsters.\n");
-	printf("Enter '0' when you are done.\n\n");
-	
 	while (1 == 1) {
+		if (count != 0) {
+			system("clear");
+		}
+		
+		printf("\n============================================================\n\n");
+		printf("The available monsters are...\n\n");	
+
+		printList(importedMonsters);
+		
+		printf("============================================================\n\n");
+		printf("Please enter the numbers of the Monsters to add to your roster.\n");
+		printf("You may choose between 1 and 6 Monsters.\n");
+		printf("Enter '0' when you are done.\n\n");
+		
+		if (currentMonster != NULL) {
+			printf("Selection #%d:\n\t%s \twas added to your roster.\n\n", count, currentMonster -> name);
+		}
+		
 		//reset monster list
 		currentMonster = importedMonsters;
 		
@@ -290,6 +331,7 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 			
 			//check for max of 6 monsters
 			if (count == 6) {
+				system("clear");
 				printf("\nYou have reached the maximum of 6 monsters.\n");
 				done = 1;
 				break;
@@ -303,6 +345,10 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 			if (index == 0) {
 				//return if 0 monsters have been entered
 				if (count == 0) {
+					system("clear");
+					printf("\n============================================================\n\n");
+					printList(importedMonsters);
+					printf("============================================================\n\n");
 					printf("\nYou have not added any Monsters!\n\n");
 				} else {
 					done = 1;
@@ -312,7 +358,11 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 			
 			//check for invalid input
 			if (!(index <= sizeList(importedMonsters))) {
-				printf("\nYou have entered an invalid index.\n");
+				system("clear");
+				printf("\n============================================================\n\n");
+				printList(importedMonsters);
+				printf("============================================================\n\n");
+				printf("You have entered an invalid index.\n");
 				printf("Please enter a number between 1 and %d.",sizeList(importedMonsters));
 				printf("\nEnter 0 if you are done adding monsters.\n\n");
 			}
@@ -338,7 +388,7 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 				//copy data to node 
 				strcpy(temp->name, currentMonster -> name);
 				temp -> attack = currentMonster -> attack;
-				temp -> defence = currentMonster -> defence;
+				temp -> defense = currentMonster -> defense;
 				temp -> speed = currentMonster -> speed;
 				temp -> health = currentMonster -> health;
 				
@@ -355,7 +405,6 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 				
 				//increase count and break
 				count++;
-				printf("\t%s \twas added to your roster.\n\n",temp -> name);
 				break;
 			}
 			//continue cycling through if not at desired monster
@@ -379,9 +428,9 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 			//If the monster is defending
 			if ( monsterChoice == 1 ) {
 				printf("Your %s attacked the %s for %d!\n", currentPlayer -> name, currentEnemy -> name, currentPlayer -> attack);
-				printf("The %s defended for %d!\n", currentEnemy -> name, currentEnemy -> defence);
+				printf("The %s defended for %d!\n", currentEnemy -> name, currentEnemy -> defense);
 				
-				damage = ( currentPlayer -> attack - currentEnemy -> defence );
+				damage = ( currentPlayer -> attack - currentEnemy -> defense );
 				
 				if ( damage <= 0 ) {
 					printf("The %s blocked all your %s's attack.\n", currentEnemy -> name, currentPlayer -> name);
@@ -430,17 +479,16 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					}
 				}
 			}
-			printf("\n============================================================\n\n");
 			break;
 			
 		case 2:
 			if ( monsterChoice == 1 ) {
 				printf("Both monsters took a defensive stance! Nothing occured!\n");
 			} else {
-				printf("The %s attacked the %s for %d!\n", currentEnemy -> name, currentPlayer -> name, currentPlayer -> attack);
-				printf("The %s defended for %d!\n", currentPlayer -> name, currentPlayer -> defence);
+				printf("The %s attacked the %s for %d!\n", currentEnemy -> name, currentPlayer -> name, currentEnemy -> attack);
+				printf("The %s defended for %d!\n", currentPlayer -> name, currentPlayer -> defense);
 				
-				damage = ( currentEnemy -> attack - currentPlayer -> defence );
+				damage = ( currentEnemy -> attack - currentPlayer -> defense );
 				
 				if ( damage <= 0 ) {
 					printf("You %s blocked all of the %s's attack.\n", currentPlayer -> name, currentEnemy -> name);
@@ -449,25 +497,35 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					printf("The %s was damaged %d HP!\n", currentPlayer -> name, damage);
 				}
 			}
-			printf("\n============================================================\n\n");
-      break;
+			break;
+		
+		default:
+			damage = currentEnemy -> attack;
+			currentPlayer -> health -= damage;
+			printf("The %s attacked for %d!\n", currentEnemy -> name, damage);
+			printf("Your %s was damaged %d HP!\n", currentPlayer -> name, damage);
+			break;
 	}
 }
 
 
 //Function: switchMonster = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-monster * switchMonster (int index, monster *head) {
+monster* switchMonster (int index, monster* head) {
 	
-	monster *temp = head;
+	monster* temp = head;
 
 	//Assuming that we don't consider 0 to be a position
-	while(index != 0) {
+	while ( !(index == 1 ) ) {
 		temp = temp->next;
 		index--;
+		
+		if (temp == NULL) {
+			return NULL;
+		}
 	}
 
-	if(temp->health <= 0) {
-		printf("Monster has no health and cannot be swapped in.\n");
+	if ( temp -> health <= 0 ) {
+		printf("Monster has no health and cannot be swapped in...\n");
 		return NULL;
 	}
 	
