@@ -140,15 +140,15 @@ int main () {
 				
 				while ( inputCheck == 0 ) {
 					system("clear");
-					if ( tempSwitchMonster -> health == 0 ) {
-						printf("\n============================================================\n\n");
-						printList(playerRoster);
-						printf("That monster has 0 Health, it can't battle...\n");
-						scanf("%d", &switchIndex);
-					} else if ( tempSwitchMonster == NULL ){
+					if ( tempSwitchMonster == NULL ){
 						printf("\n============================================================\n\n");
 						printList(playerRoster);
 						printf("Please select a valid monster...\n");
+						scanf("%d", &switchIndex);
+					} else if ( tempSwitchMonster -> health == 0 ) {
+						printf("\n============================================================\n\n");
+						printList(playerRoster);
+						printf("That monster has 0 Health, it can't battle...\n");
 						scanf("%d", &switchIndex);
 					} else {
 						inputCheck = 1;
@@ -200,15 +200,15 @@ int main () {
 				
 				while ( inputCheck == 0 ) {
 					system("clear");
-					if ( tempSwitchMonster -> health == 0 ) {
-						printf("\n============================================================\n\n");
-						printList(playerRoster);
-						printf("That monster has 0 Health, it can't battle...\n");
-						scanf("%d", &switchIndex);
-					} else if ( tempSwitchMonster == NULL ){
+					if ( tempSwitchMonster == NULL ){
 						printf("\n============================================================\n\n");
 						printList(playerRoster);
 						printf("Please select a valid monster...\n");
+						scanf("%d", &switchIndex);
+					} else if ( tempSwitchMonster -> health == 0 ) {
+						printf("\n============================================================\n\n");
+						printList(playerRoster);
+						printf("That monster has 0 Health, it can't battle...\n");
 						scanf("%d", &switchIndex);
 					} else {
 						inputCheck = 1;
