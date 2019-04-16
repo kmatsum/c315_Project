@@ -101,6 +101,8 @@ int main () {
 	int battling = 1;
 	int choice = 0;
 	while (battling == 1) {
+		//system("clear");
+		
 		printf("\n============================================================\n\n");
 
 		printf("Current battle contestants ...\n\n");
@@ -129,35 +131,39 @@ int main () {
 				printf("Which monster would you like to switch out your curently battling monster with?\n");
 				
 				int switchIndex = 0;
+				int inputCheck = 0;
 				monster* tempSwitchMonster = NULL;
 			
 				scanf("%d", &switchIndex);
 				
 				tempSwitchMonster = switchMonster(switchIndex, playerRoster);
 				
-				while ( tempSwitchMonster == NULL || tempSwitchMonster == currentPlayerMonster || tempSwitchMonster -> health == 0 ) {
+				while ( inputCheck == 0 ) {
 					system("clear");
-					
-					if (currentPlayerMonster == tempSwitchMonster) {
-						printf("\n============================================================\n\n");
-						printList(playerRoster);
-						printf("That monster is already out on the battlefield!\nPlease Select another:\n");
-						scanf("%d", &switchIndex);
-					} else if ( tempSwitchMonster -> health == 0 ) {
+					if ( tempSwitchMonster -> health == 0 ) {
 						printf("\n============================================================\n\n");
 						printList(playerRoster);
 						printf("That monster has 0 Health, it can't battle...\n");
 						scanf("%d", &switchIndex);
-					} else {
+					} else if ( tempSwitchMonster == NULL ){
 						printf("\n============================================================\n\n");
 						printList(playerRoster);
 						printf("Please select a valid monster...\n");
 						scanf("%d", &switchIndex);
+					} else {
+						inputCheck = 1;
 					}
 					tempSwitchMonster = switchMonster(switchIndex, playerRoster);
 				} //END OF: While Loop
 				
-				currentPlayerMonster = tempSwitchMonster;
+				if ( currentPlayerMonster == tempSwitchMonster ) {
+					printf("\n============================================================\n\n");
+					printf("You decided to not switch the Monster...\n");
+				} else {
+					printf("\n============================================================\n\n");
+					printf("You switched your %s with your %s!\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
+					currentPlayerMonster = tempSwitchMonster;
+				}
 				
 				break;
 				
@@ -184,35 +190,40 @@ int main () {
 				printf("Your monster fainted! Which monster would you like to switch out with?\n");
 				
 				int switchIndex = 0;
+				int inputCheck = 0;
+				
 				monster* tempSwitchMonster = NULL;
 			
 				scanf("%d", &switchIndex);
 				
 				tempSwitchMonster = switchMonster(switchIndex, playerRoster);
 				
-				while ( NULL == tempSwitchMonster || tempSwitchMonster == currentPlayerMonster || tempSwitchMonster -> health == 0 ) {
+				while ( inputCheck == 0 ) {
 					system("clear");
-					
-					if (currentPlayerMonster == tempSwitchMonster) {
-						printf("\n============================================================\n\n");
-						printList(playerRoster);
-						printf("That monster is already out on the battlefield!\nPlease Select another:\n");
-						scanf("%d", &switchIndex);
-					} else if ( tempSwitchMonster -> health == 0 ) {
+					if ( tempSwitchMonster -> health == 0 ) {
 						printf("\n============================================================\n\n");
 						printList(playerRoster);
 						printf("That monster has 0 Health, it can't battle...\n");
 						scanf("%d", &switchIndex);
-					} else {
+					} else if ( tempSwitchMonster == NULL ){
 						printf("\n============================================================\n\n");
 						printList(playerRoster);
 						printf("Please select a valid monster...\n");
 						scanf("%d", &switchIndex);
+					} else {
+						inputCheck = 1;
 					}
 					tempSwitchMonster = switchMonster(switchIndex, playerRoster);
 				}
 				
-				currentPlayerMonster = tempSwitchMonster;
+				if ( currentPlayerMonster == tempSwitchMonster ) {
+					printf("\n============================================================\n\n");
+					printf("You decided to not switch the Monster...\n");
+				} else {
+					printf("\n============================================================\n\n");
+					printf("You switched your %s with your %s!\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
+					currentPlayerMonster = tempSwitchMonster;
+				}
 		} else if (currentEnemyMonster -> health == 0) {
 			printf("\n============================================================\n\n");
 			currentEnemyMonster = currentEnemyMonster -> next;
