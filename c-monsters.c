@@ -256,8 +256,7 @@ void welcomeMessage(char* playerName) {
 
 
 //FUNCTION: pauseOutput = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-void pauseOutput() {	
-	char junk[50];
+void pauseOutput() {
 	printf (CYANBLINK "Press ENTER to Continue!\n" RESET);
 	fflush(stdout);
 	getchar();
@@ -605,7 +604,6 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 		
 		default:
 			damage = currentEnemy -> attack;
-			currentPlayer -> health -= damage;
 			currentPlayer -> health -= damage;
 			printf("The %s attacked for %d!\n", currentEnemy -> name, damage);
 			printf("Your %s was damaged %d HP!\n", currentPlayer -> name, damage);
