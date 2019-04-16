@@ -205,7 +205,7 @@ int main () {
 				printf("There are no more monsters in the enemy roster!\n");
 				
 				printf("\n============================================================\n\n");
-				printf("\t\t\tYOU WIN!\n");
+				printf("██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗ ██████╗ ███╗   ██╗    ██╗\n╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██╔═══██╗████╗  ██║    ██║\n ╚████╔╝ ██║   ██║██║   ██║    ██║ █╗ ██║██║   ██║██╔██╗ ██║    ██║\n  ╚██╔╝  ██║   ██║██║   ██║    ██║███╗██║██║   ██║██║╚██╗██║    ╚═╝\n   ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝╚██████╔╝██║ ╚████║    ██╗\n   ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═══╝    ╚═╝");
 				printf("\n============================================================\n\n");
 				
 				battling = 0;
@@ -317,15 +317,28 @@ monster* fileIO (FILE* MONSTERLIST) {
 void printList(monster* n) {
 	int index = 1;
 	while(n != NULL) {
-		printf("%d ---- \t", index);
-    	printf("Name: %s\n", n -> name);
-		printf("\tHealth: %d\n", n -> health);
-    	printf("\tAttack: %d\n", n -> attack);
-    	printf("\tDefense: %d\n", n -> defense);
-    	printf("\tSpeed: %d\n", n -> speed);
-		printf("\n");
-		index ++;
-    	n = n -> next;
+		if( n->health == 0) {
+			printf(BOLDRED"%d ---- \t", index);
+			printf("Name: %s\n", n -> name);
+			printf("\tHealth: %d\n", n -> health);
+			printf("\tAttack: %d\n", n -> attack);
+			printf("\tDefense: %d\n", n -> defense);
+			printf("\tSpeed: %d\n" RESET, n -> speed);
+			printf("\n");
+			index ++;
+			n = n -> next;
+		}
+		else {
+			printf("%d ---- \t", index);
+			printf("Name: %s\n", n -> name);
+			printf("\tHealth: %d\n", n -> health);
+			printf("\tAttack: %d\n", n -> attack);
+			printf("\tDefense: %d\n", n -> defense);
+			printf("\tSpeed: %d\n", n -> speed);
+			printf("\n");
+			index ++;
+			n = n -> next;
+		}
 	}
 } //END OF: printList
 
