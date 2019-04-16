@@ -38,6 +38,7 @@ int main () {
 	
 	int sizeList (monster*); //view the number of monsters
 	int randomNum (); //returns a random number from the API
+	int faintedMonster = 0;
 	
 	monster* fileIO (FILE*);
 	void printList (monster*);
@@ -53,15 +54,19 @@ int main () {
 	srand(time(NULL));
 	
 	char playerName[20]; //create player name array 
+	
 	monster enemies[4]; //create enemy array
 	monster* availableMonsterList = NULL; //List of ALL avilable monster for players to use
 	monster* playerRoster = NULL; //create ally linked list
 	monster* enemyLinkedList = NULL; //create enemy linked list
 	monster* currentPlayerMonster = NULL; //create current ally pointer
 	monster* currentEnemyMonster = NULL; //Create current ally pointer
+	
 	int currentEnemy; //index of current enemy
 	FILE* MONSTERLIST = fopen("Monsters.txt", "r"); //Player Monster File Variable
 	FILE* ENEMYLIST = fopen("Enemies.txt", "r"); //Enemy File Variable
+	
+	int playerRosterSize = 0;
 	//END OF: Variables = = = = = = = = = = = = =
 	
 	
@@ -74,13 +79,13 @@ int main () {
 	welcomeMessage(playerName); //welcome user
 	availableMonsterList = fileIO(MONSTERLIST); //import monsters to available monsters list
 	enemyLinkedList = fileIO(ENEMYLIST); //import monsters to enemy list
-	//printf("\nThe available monsters are...\n\n");	
-	//printList(availableMonsterList); //print available monsters
+	
 	playerRoster = fillPlayerRoster(availableMonsterList); //add available monsters to roster
 	printf("\n============================================================\n\n");
 	printf("The monsters you have added are...\n\n");
 	printList(playerRoster); //print player selected monsters
-	printf("You have added a total of %d Monsters!\n", sizeList(playerRoster));
+	playerRosterSize = sizeList(playerRoster);
+	printf("You have added a total of %d Monsters!\n", playerRosterSize);
 	printf("\n============================================================\n\n");
 	printf("The monsters you are fighting are...\n\n");
 	printList(enemyLinkedList); //print enemy monster list
@@ -95,7 +100,7 @@ int main () {
 	//start while loop
 	int battling = 1;
 	int choice = 0;
-	while (battling == 1) {		
+	while (battling == 1) {
 		printf("\n============================================================\n\n");
 
 		printf("Current battle contestants ...\n\n");
@@ -150,7 +155,7 @@ int main () {
 						scanf("%d", &switchIndex);
 					}
 					tempSwitchMonster = switchMonster(switchIndex, playerRoster);
-				}
+				} //END OF: While Loop
 				
 				currentPlayerMonster = tempSwitchMonster;
 				
@@ -159,9 +164,19 @@ int main () {
 			default:
 				printf("\nYou have entered invalid input.\nPlease enter 1, 2, or 3.\n\n");
 				break;
-		}
+		} //END OF: Switch Statement
 		
 		if (currentPlayerMonster -> health == 0) {
+				
+				faintedMonster++;
+				
+				if ( faintedMonster == playerRosterSize ) {
+					printf("\n============================================================\n\n");
+					printf("\t\t\tYOU LOST!\n");
+					printf("\n============================================================\n\n");
+					exit(0);
+				}
+				
 				system("clear");
 				printf("\n============================================================\n\n");
 				
@@ -318,7 +333,7 @@ void printList(monster* n) {
 	int index = 1;
 	while(n != NULL) {
 		if( n->health == 0) {
-			printf(BOLDRED"%d ---- \t", index);
+			printf(BOLDRED"%d --- \t", index);
 			printf("Name: %s\n", n -> name);
 			printf("\tHealth: %d\n", n -> health);
 			printf("\tAttack: %d\n", n -> attack);
@@ -329,7 +344,7 @@ void printList(monster* n) {
 			n = n -> next;
 		}
 		else {
-			printf("%d ---- \t", index);
+			printf("%d --- \t", index);
 			printf("Name: %s\n", n -> name);
 			printf("\tHealth: %d\n", n -> health);
 			printf("\tAttack: %d\n", n -> attack);
@@ -372,6 +387,7 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 	monster* currentPlayerRoster = head; //set current player roster to head
 	int index; //variable to store user index choice
 	int count = 0; //variable to keep track of number of added monsters
+	int listSize = sizeList(importedMonsters);
 	
 	while (1 == 1) {
 		if (count != 0) {
@@ -429,17 +445,17 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 			}
 			
 			//check for invalid input
-			if (!(index <= sizeList(importedMonsters))) {
+			if (!(index <= listSize)) {
 				system("clear");
 				printf("\n============================================================\n\n");
 				printList(importedMonsters);
 				printf("============================================================\n\n");
 				printf("You have entered an invalid index.\n");
-				printf("Please enter a number between 1 and %d.",sizeList(importedMonsters));
+				printf("Please enter a number between 1 and %d.", listSize);
 				printf("\nEnter 0 if you are done adding monsters.\n\n");
 			}
 			
-			if (!((index == 0) || (count == 6) || ((index > sizeList(importedMonsters))))) {
+			if (!((index == 0) || (count == 6) || (index > listSize))) {
 				checking = 0;
 			}
 		}
@@ -535,7 +551,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 						//Is the Player Dead?
 						if ( currentPlayer -> health <= 0 ) {
 							currentPlayer -> health = 0;
-							printf("Your %s has no more HP and fainted!\n\n", currentPlayer -> name);
+							printf("Your %s has no more HP and fainted!\n", currentPlayer -> name);
 						}
 					}
 				} else { //If the enemy has higher Speed
