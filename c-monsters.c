@@ -80,7 +80,7 @@ int main () {
 	printf("\n============================================================\n\n");
 	printf("The monsters you have added are...\n\n");
 	printList(playerRoster); //print player selected monsters
-	printf("You have added a total of %d Monsters!\n",sizeList(playerRoster));
+	printf("You have added a total of %d Monsters!\n", sizeList(playerRoster));
 	printf("\n============================================================\n\n");
 	printf("The monsters you are fighting are...\n\n");
 	printList(enemyLinkedList); //print enemy monster list
@@ -130,7 +130,7 @@ int main () {
 				
 				tempSwitchMonster = switchMonster(switchIndex, playerRoster);
 				
-				while ( NULL == tempSwitchMonster || tempSwitchMonster == currentPlayerMonster || tempSwitchMonster -> health == 0 ) {
+				while ( tempSwitchMonster == NULL || tempSwitchMonster == currentPlayerMonster || tempSwitchMonster -> health == 0 ) {
 					system("clear");
 					
 					if (currentPlayerMonster == tempSwitchMonster) {
@@ -210,7 +210,7 @@ int main () {
 				
 				battling = 0;
 			} else {
-				printf("The enemy monster fainted!\nHere comes a %s", currentEnemyMonster -> name);
+				printf("The enemy monster fainted!\nHere comes a %s!\n", currentEnemyMonster -> name);
 			}
 		}
 	}
@@ -376,7 +376,7 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 		printf("Enter '0' when you are done.\n\n");
 		
 		if (currentMonster != NULL) {
-			printf("Selection #%d:\n\t%s \twas added to your roster.\n\n", count, currentMonster -> name);
+			printf("Selection #%d:\n\t%s was added to your roster.\n\n", count, currentMonster -> name);
 		}
 		
 		//reset monster list
@@ -590,12 +590,11 @@ monster* switchMonster (int index, monster* head) {
 
 	//Assuming that we don't consider 0 to be a position
 	while ( !(index == 1 ) ) {
-		temp = temp->next;
-		index--;
-		
 		if (temp == NULL) {
 			return NULL;
 		}
+		temp = temp->next;
+		index--;
 	}
 	
 	return temp;
@@ -605,12 +604,14 @@ monster* switchMonster (int index, monster* head) {
 
 //FUNCTION: Status
 void status(monster* ally, monster* enemy) {
-    printf("Your monster is: %s", ally -> name);
+    printf("Your monster: %s\n", ally -> name);
 		printf("\tHealth: %d\n", ally -> health);
+		printf("\tSpeed: %d\n", ally -> speed);
 		
-		printf("V.S.\n");
+		printf("\n\tV.S.\n\n");
 		
-		printf("The enemy monster is: %s", enemy -> name);
+		printf("Enemy monster: %s\n", enemy -> name);
 		printf("\tHealth: %d\n", enemy -> health);
+		printf("\tSpeed: %d\n", enemy -> speed);
 		printf("\n");
 }
