@@ -302,7 +302,7 @@ monster* fileIO (FILE* MONSTERLIST) {
 	//Reading the File  = = = = = = = =
 
 	getline(&line, &bufsize, MONSTERLIST); //Read the first line (Name)
-	sscanf( line, " %[^\n]s", head -> name ); //Store first line into the first node of the linked list
+	sscanf( line, " %[^\r]s", head -> name ); //Store first line into the first node of the linked list
 	
 	getline(&line, &bufsize, MONSTERLIST); //Read next line (All other interger stats)
 	sscanf(line, "%d\t%d\t%d", &(head -> attack), &(head -> defense), &(head -> speed)); //This uses the scanf function to read the input buffer as integers using %d
@@ -320,7 +320,7 @@ monster* fileIO (FILE* MONSTERLIST) {
 		monster* temp = (monster*)malloc(sizeof(monster));
 		
 		getline(&line, &bufsize, MONSTERLIST); //Read the first line (Name)
-		sscanf( line, " %[^\n]s", temp -> name ); //Store first line into the first node of the linked list
+		sscanf( line, " %[^\r]s", temp -> name ); //Store first line into the first node of the linked list
 		
 		getline(&line, &bufsize, MONSTERLIST); //Read next line (All other interger stats)
 		sscanf(line, "%d\t%d\t%d", &(temp -> attack), &(temp -> defense), &(temp -> speed));  //This uses the scanf function to read the input buffer as integers using %d
@@ -542,7 +542,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 					//Is enemy dead?
 					if ( currentEnemy -> health <= 0 ) {
 						currentEnemy -> health = 0;
-						printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
+						printf("The enemy has no more HP! The %s fainted...\n", currentEnemy -> name);
 					}
 				}
 			} else {
@@ -602,7 +602,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 				damage = ( currentEnemy -> attack - currentPlayer -> defense );
 				
 				if ( damage <= 0 ) {
-					printf("You %s blocked all of the %s's attack.\n", currentPlayer -> name, currentEnemy -> name);
+					printf("Your %s blocked all of the %s's attack.\n", currentPlayer -> name, currentEnemy -> name);
 				} else {
 					currentPlayer -> health -= damage;
 					printf("The %s was damaged %d HP!\n", currentPlayer -> name, damage);
