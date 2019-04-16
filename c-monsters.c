@@ -274,7 +274,7 @@ monster* fileIO (FILE* MONSTERLIST) {
 	//Reading the File  = = = = = = = =
 
 	getline(&line, &bufsize, MONSTERLIST); //Read the first line (Name)
-	strcpy(head -> name, line); //Store first line into the first node of the linked list
+	sscanf( line, " %s", head -> name ); //Store first line into the first node of the linked list
 	
 	getline(&line, &bufsize, MONSTERLIST); //Read next line (All other interger stats)
 	sscanf(line, "%d\t%d\t%d", &(head -> attack), &(head -> defense), &(head -> speed)); //This uses the scanf function to read the input buffer as integers using %d
@@ -284,6 +284,7 @@ monster* fileIO (FILE* MONSTERLIST) {
 	getline(&line, &bufsize, MONSTERLIST); //Read the empty line in the text file
 	
 	
+	
 	//While Loop to keep adding monsters to the Linked List...
 	while (!feof(MONSTERLIST)) { //While NOT end of file
 		
@@ -291,8 +292,8 @@ monster* fileIO (FILE* MONSTERLIST) {
 		monster* temp = (monster*)malloc(sizeof(monster));
 		
 		getline(&line, &bufsize, MONSTERLIST); //Read the first line (Name)
-		strcpy(temp -> name, line); //Store first line into the first node of the linked list
-	
+		sscanf( line, " %s", temp -> name ); //Store first line into the first node of the linked list
+		
 		getline(&line, &bufsize, MONSTERLIST); //Read next line (All other interger stats)
 		sscanf(line, "%d\t%d\t%d", &(temp -> attack), &(temp -> defense), &(temp -> speed));  //This uses the scanf function to read the input buffer as integers using %d
 		
@@ -317,7 +318,7 @@ void printList(monster* n) {
 	int index = 1;
 	while(n != NULL) {
 		printf("%d ---- \t", index);
-    	printf("Name: %s", n -> name);
+    	printf("Name: %s\n", n -> name);
 		printf("\tHealth: %d\n", n -> health);
     	printf("\tAttack: %d\n", n -> attack);
     	printf("\tDefense: %d\n", n -> defense);
