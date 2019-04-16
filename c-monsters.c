@@ -120,8 +120,8 @@ int main () {
 				printf("\n============================================================\n\n");
 				
 				//Ask for input on which monster to choose from:
-				printf("Which monster would you like to switch out your curently battling monster with?\n");
 				printList(playerRoster);
+				printf("Which monster would you like to switch out your curently battling monster with?\n");
 				
 				int switchIndex = 0;
 				monster* tempSwitchMonster = NULL;
@@ -130,13 +130,18 @@ int main () {
 				
 				tempSwitchMonster = switchMonster(switchIndex, playerRoster);
 				
-				while (NULL == tempSwitchMonster || tempSwitchMonster == currentPlayerMonster) {
+				while ( NULL == tempSwitchMonster || tempSwitchMonster == currentPlayerMonster || tempSwitchMonster -> health == 0 ) {
 					system("clear");
 					
 					if (currentPlayerMonster == tempSwitchMonster) {
 						printf("\n============================================================\n\n");
 						printList(playerRoster);
 						printf("That monster is already out on the battlefield!\nPlease Select another:\n");
+						scanf("%d", &switchIndex);
+					} else if ( tempSwitchMonster -> health == 0 ) {
+						printf("\n============================================================\n\n");
+						printList(playerRoster);
+						printf("That monster has 0 Health, it can't battle...\n");
 						scanf("%d", &switchIndex);
 					} else {
 						printf("\n============================================================\n\n");
@@ -154,6 +159,59 @@ int main () {
 			default:
 				printf("\nYou have entered invalid input.\nPlease enter 1, 2, or 3.\n\n");
 				break;
+		}
+		
+		if (currentPlayerMonster -> health == 0) {
+				system("clear");
+				printf("\n============================================================\n\n");
+				
+				printList(playerRoster);
+				printf("Your monster fainted! Which monster would you like to switch out with?\n");
+				
+				int switchIndex = 0;
+				monster* tempSwitchMonster = NULL;
+			
+				scanf("%d", &switchIndex);
+				
+				tempSwitchMonster = switchMonster(switchIndex, playerRoster);
+				
+				while ( NULL == tempSwitchMonster || tempSwitchMonster == currentPlayerMonster || tempSwitchMonster -> health == 0 ) {
+					system("clear");
+					
+					if (currentPlayerMonster == tempSwitchMonster) {
+						printf("\n============================================================\n\n");
+						printList(playerRoster);
+						printf("That monster is already out on the battlefield!\nPlease Select another:\n");
+						scanf("%d", &switchIndex);
+					} else if ( tempSwitchMonster -> health == 0 ) {
+						printf("\n============================================================\n\n");
+						printList(playerRoster);
+						printf("That monster has 0 Health, it can't battle...\n");
+						scanf("%d", &switchIndex);
+					} else {
+						printf("\n============================================================\n\n");
+						printList(playerRoster);
+						printf("Please select a valid monster...\n");
+						scanf("%d", &switchIndex);
+					}
+					tempSwitchMonster = switchMonster(switchIndex, playerRoster);
+				}
+				
+				currentPlayerMonster = tempSwitchMonster;
+		} else if (currentEnemyMonster -> health == 0) {
+			printf("\n============================================================\n\n");
+			currentEnemyMonster = currentEnemyMonster -> next;
+			if ( currentEnemyMonster == NULL ) {
+				printf("There are no more monsters in the enemy roster!\n");
+				
+				printf("\n============================================================\n\n");
+				printf("\t\t\tYOU WIN!\n");
+				printf("\n============================================================\n\n");
+				
+				battling = 0;
+			} else {
+				printf("The enemy monster fainted!\nHere comes a %s", currentEnemyMonster -> name);
+			}
 		}
 	}
 } //END OF: main
@@ -437,6 +495,7 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 				} else {
 					currentEnemy -> health -= damage;
 					printf("The %s was damaged %d HP!\n", currentEnemy -> name, damage);
+					
 					//Is enemy dead?
 					if ( currentEnemy -> health <= 0 ) {
 						currentEnemy -> health = 0;
@@ -458,10 +517,13 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 						damage = currentEnemy -> attack;
 						currentPlayer -> health -= damage;
 						printf("Your %s also took a full blow! Hit for %d!\n", currentPlayer -> name, damage);
+						
+						//Is the Player Dead?
+						if ( currentPlayer -> health <= 0 ) {
+							currentPlayer -> health = 0;
+							printf("Your %s has no more HP and fainted!\n\n", currentPlayer -> name);
+						}
 					}
-					
-					
-					
 				} else { //If the enemy has higher Speed
 					damage = currentEnemy -> attack;
 					currentPlayer -> health -= damage;
@@ -473,9 +535,15 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 						printf("Your %s has no more HP! The %s fainted...\n\n", currentPlayer -> name, currentPlayer -> name);
 						return;
 					} else {
-						damage = currentEnemy -> attack;
-						currentPlayer -> health -= damage;
-						printf("The %s also took a full blow! Hit for %d!\n", currentEnemy -> name, damage);					
+						damage = currentPlayer -> attack;
+						currentEnemy -> health -= damage;
+						printf("The %s also took a full blow! Hit for %d!\n", currentEnemy -> name, damage);
+						
+						//Is enemy dead?
+						if ( currentEnemy -> health <= 0 ) {
+							currentEnemy -> health = 0;
+							printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
+						}
 					}
 				}
 			}
@@ -495,6 +563,11 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 				} else {
 					currentPlayer -> health -= damage;
 					printf("The %s was damaged %d HP!\n", currentPlayer -> name, damage);
+					
+				if ( currentPlayer -> health <= 0 ) {
+						currentPlayer -> health = 0;
+						printf("Your %s has no more HP and fainted!\n\n", currentPlayer -> name);
+					}
 				}
 			}
 			break;
@@ -522,11 +595,6 @@ monster* switchMonster (int index, monster* head) {
 		if (temp == NULL) {
 			return NULL;
 		}
-	}
-
-	if ( temp -> health <= 0 ) {
-		printf("Monster has no health and cannot be swapped in...\n");
-		return NULL;
 	}
 	
 	return temp;
