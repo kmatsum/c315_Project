@@ -171,11 +171,11 @@ int main () {
 				} //END OF: While Loop
 				
 				if ( currentPlayerMonster == tempSwitchMonster ) {
-					printf("\n============================================================\n\n\n\n");
-					printf("You decided to not switch the Monster...\n\n\n");
+					printf("\n============================================================\n\n");
+					printf("You decided to not switch the Monster...\n\n\n\n\n");
 				} else {
-					printf("\n============================================================\n\n\n\n");
-					printf("You switched your %s with your %s!\n\n\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
+					printf("\n============================================================\n\n");
+					printf("You switched your %s with your %s!\n\n\n\n\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
 					currentPlayerMonster = tempSwitchMonster;
 				}
 				
@@ -232,11 +232,11 @@ int main () {
 				}
 				
 				if ( currentPlayerMonster == tempSwitchMonster ) {
-					printf("\n============================================================\n\n\n\n");
-					printf("You decided to not switch the Monster...\n\n\n");
+					printf("\n============================================================\n\n");
+					printf("You decided to not switch the Monster...\n\n\n\n\n");
 				} else {
-					printf("\n============================================================\n\n\n\n");
-					printf("You switched your %s with your %s!\n\n\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
+					printf("\n============================================================\n\n");
+					printf("You switched your %s with your %s!\n\n\n\n\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
 					currentPlayerMonster = tempSwitchMonster;
 				}
 		} else if (currentEnemyMonster -> health == 0) {
@@ -435,6 +435,8 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 		
 		if (currentMonster != NULL) {
 			printf("Selection #%d:\n\t%s was added to your roster.\n\n", count, currentMonster -> name);
+		} else {
+			printf("\n\n\n");
 		}
 		
 		//reset monster list
@@ -464,8 +466,15 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 				if (count == 0) {
 					system("clear");
 					printf("\n============================================================\n\n");
+					
+					printf("The available monsters are...\n\n");
+					
 					printList(importedMonsters);
-					printf("\nYou have not added any Monsters!\n\n");
+					
+					printf("Please enter the numbers of the Monsters to add to your roster.\n");
+					printf("You may choose between 1 and 6 Monsters.\n");
+					printf("Enter '0' when you are done.\n\n");
+					printf("\n\tYou have not added any Monsters!\n\n");
 				} else {
 					done = 1;
 					break;
