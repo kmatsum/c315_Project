@@ -30,11 +30,10 @@ typedef struct monster {
 //FUNCTION: main  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 int main () {	
 	//FUNCTION PROTOTYPES = = = = = = = = = = = =
-	void welcomeMessage (char*);
+	void welcomeMessage (char*); //Welcome Message
+	void pauseOutput (); //Pause Output
 	
 	monster* fillPlayerRoster (monster*); //add a monster to player roster
-	//monster* removeAlly (monster*); //remove a preexisting ally
-	//monster* peekAllies (monster*); //view all allies
 	
 	int sizeList (monster*); //view the number of monsters
 	int randomNum (); //returns a random number from the API
@@ -81,34 +80,48 @@ int main () {
 	enemyLinkedList = fileIO(ENEMYLIST); //import monsters to enemy list
 	
 	playerRoster = fillPlayerRoster(availableMonsterList); //add available monsters to roster
+	system("clear");
+	
 	printf("\n============================================================\n\n");
 	printf("The monsters you have added are...\n\n");
 	printList(playerRoster); //print player selected monsters
 	playerRosterSize = sizeList(playerRoster);
 	printf("You have added a total of %d Monsters!\n", playerRosterSize);
+	
+	printf("\n============================================================\n\n");
+
+	getchar();
+	pauseOutput();
+	
 	printf("\n============================================================\n\n");
 	printf("The monsters you are fighting are...\n\n");
 	printList(enemyLinkedList); //print enemy monster list
-	printf("============================================================\n\n");
+	
+	pauseOutput();
+	
+	printf("\n============================================================\n\n\n\n");
 	
 	//Battle Logic = = = = = = = = = = = = = = = 
 	//set current monsters
 	currentPlayerMonster = playerRoster;
 	currentEnemyMonster = enemyLinkedList;
-	printf("The battle has BEGUN!\n");
+	printf("The battle has BEGUN!\n\n\n");
 	
 	//start while loop
 	int battling = 1;
 	int choice = 0;
-	while (battling == 1) {
-		//system("clear");
-		
+	while (battling == 1) {		
 		printf("\n============================================================\n\n");
 
 		printf("Current battle contestants ...\n\n");
 		status(currentPlayerMonster, currentEnemyMonster);
-		printf("Enter 1 to ATTACK, 2 to DEFEND, or 3 to SWITCH monsters.\n\nCHOICE: ");
+		
+		printf("============================================================\n\n");
+		
+		printf("Please select an action:\n\t1) Attack\n\t2) Defend\n\t3) Switch Monsters\n\nCHOICE: ");
 		scanf("%d",&choice);
+		system("clear");
+
 		
 		printf("\n============================================================\n\n");
 		
@@ -128,6 +141,7 @@ int main () {
 				
 				//Ask for input on which monster to choose from:
 				printList(playerRoster);
+				
 				printf("Which monster would you like to switch out your curently battling monster with?\n");
 				
 				int switchIndex = 0;
@@ -135,7 +149,7 @@ int main () {
 				monster* tempSwitchMonster = NULL;
 			
 				scanf("%d", &switchIndex);
-				
+						
 				tempSwitchMonster = switchMonster(switchIndex, playerRoster);
 				
 				while ( inputCheck == 0 ) {
@@ -157,18 +171,18 @@ int main () {
 				} //END OF: While Loop
 				
 				if ( currentPlayerMonster == tempSwitchMonster ) {
-					printf("\n============================================================\n\n");
-					printf("You decided to not switch the Monster...\n");
+					printf("\n============================================================\n\n\n\n");
+					printf("You decided to not switch the Monster...\n\n\n");
 				} else {
-					printf("\n============================================================\n\n");
-					printf("You switched your %s with your %s!\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
+					printf("\n============================================================\n\n\n\n");
+					printf("You switched your %s with your %s!\n\n\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
 					currentPlayerMonster = tempSwitchMonster;
 				}
 				
 				break;
 				
 			default:
-				printf("\nYou have entered invalid input.\nPlease enter 1, 2, or 3.\n\n");
+				printf("You have entered invalid input.\nPlease enter 1, 2, or 3.\n\n\n\n");
 				break;
 		} //END OF: Switch Statement
 		
@@ -218,15 +232,14 @@ int main () {
 				}
 				
 				if ( currentPlayerMonster == tempSwitchMonster ) {
-					printf("\n============================================================\n\n");
-					printf("You decided to not switch the Monster...\n");
+					printf("\n============================================================\n\n\n\n");
+					printf("You decided to not switch the Monster...\n\n\n");
 				} else {
-					printf("\n============================================================\n\n");
-					printf("You switched your %s with your %s!\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
+					printf("\n============================================================\n\n\n\n");
+					printf("You switched your %s with your %s!\n\n\n", currentPlayerMonster -> name, tempSwitchMonster -> name);
 					currentPlayerMonster = tempSwitchMonster;
 				}
 		} else if (currentEnemyMonster -> health == 0) {
-			printf("\n============================================================\n\n");
 			currentEnemyMonster = currentEnemyMonster -> next;
 			if ( currentEnemyMonster == NULL ) {
 				printf("There are no more monsters in the enemy roster!\n");
@@ -238,7 +251,7 @@ int main () {
 				
 				battling = 0;
 			} else {
-				printf("The enemy monster fainted!\nHere comes a %s!\n", currentEnemyMonster -> name);
+				printf("Here comes a %s!\n", currentEnemyMonster -> name);
 			}
 		}
 	}
@@ -253,21 +266,6 @@ int main () {
 
 
 
-//FUNCTION: welcomeMessage  = = = = = = = = = = = = = = = = = = = = = = = = = =
-void welcomeMessage(char* playerName) {
-	void pauseOutput(); //Function prototype to pauseOutput
-	printf (BOLDCYAN " ▄         ▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄           ▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄▄       ▄▄ ▄▄▄▄▄▄▄▄▄▄▄\n▐░▌       ▐░▐░░░░░░░░░░░▐░▌         ▐░░░░░░░░░░░▐░░░░░░░░░░░▐░░▌     ▐░░▐░░░░░░░░░░░▌\n▐░▌       ▐░▐░█▀▀▀▀▀▀▀▀▀▐░▌         ▐░█▀▀▀▀▀▀▀▀▀▐░█▀▀▀▀▀▀▀█░▐░▌░▌   ▐░▐░▐░█▀▀▀▀▀▀▀▀▀ \n▐░▌       ▐░▐░▌         ▐░▌         ▐░▌         ▐░▌       ▐░▐░▌▐░▌ ▐░▌▐░▐░▌\n▐░▌   ▄   ▐░▐░█▄▄▄▄▄▄▄▄▄▐░▌         ▐░▌         ▐░▌       ▐░▐░▌ ▐░▐░▌ ▐░▐░█▄▄▄▄▄▄▄▄▄ \n▐░▌  ▐░▌  ▐░▐░░░░░░░░░░░▐░▌         ▐░▌         ▐░▌       ▐░▐░▌  ▐░▌  ▐░▐░░░░░░░░░░░▌\n▐░▌ ▐░▌░▌ ▐░▐░█▀▀▀▀▀▀▀▀▀▐░▌         ▐░▌         ▐░▌       ▐░▐░▌   ▀   ▐░▐░█▀▀▀▀▀▀▀▀▀\n▐░▌▐░▌ ▐░▌▐░▐░▌         ▐░▌         ▐░▌         ▐░▌       ▐░▐░▌       ▐░▐░▌\n▐░▌░▌   ▐░▐░▐░█▄▄▄▄▄▄▄▄▄▐░█▄▄▄▄▄▄▄▄▄▐░█▄▄▄▄▄▄▄▄▄▐░█▄▄▄▄▄▄▄█░▐░▌       ▐░▐░█▄▄▄▄▄▄▄▄▄\n▐░░▌     ▐░░▐░░░░░░░░░░░▐░░░░░░░░░░░▐░░░░░░░░░░░▐░░░░░░░░░░░▐░▌       ▐░▐░░░░░░░░░░░▌\n ▀▀       ▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀         ▀ ▀▀▀▀▀▀▀▀▀▀▀\n\n\n ▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄\n▐░░░░░░░░░░░▐░░░░░░░░░░░▌\n ▀▀▀▀█░█▀▀▀▀▐░█▀▀▀▀▀▀▀█░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░█▄▄▄▄▄▄▄█░▌\n     ▐░▌    ▐░░░░░░░░░░░▌\n      ▀      ▀▀▀▀▀▀▀▀▀▀▀\n\n\n" RESET);
-	printf (BOLDRED "███▄ ▄███▓ ▒█████   ███▄    █   ██████ ▄▄▄█████▓▓█████  ██▀███    ██████\n▓██▒▀█▀ ██▒▒██▒  ██▒ ██ ▀█   █ ▒██    ▒ ▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒▒██    ▒\n▓██    ▓██░▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄   ▒ ▓██░ ▒░▒███   ▓██ ░▄█ ▒░ ▓██▄\n▒██    ▒██ ▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒░ ▓██▓ ░ ▒▓█  ▄ ▒██▀▀█▄    ▒   ██▒\n▒██▒   ░██▒░ ████▓▒░▒██░   ▓██░▒██████▒▒  ▒██▒ ░ ░▒████▒░██▓ ▒██▒▒██████▒▒\n░ ▒░   ░  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░  ▒ ░░   ░░ ▒░ ░░ ▒▓ ░▒▓░▒ ▒▓▒ ▒ ░\n░  ░      ░  ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░    ░     ░ ░  ░  ░▒ ░ ▒░░ ░▒  ░ ░\n░      ░   ░ ░ ░ ▒     ░   ░ ░ ░  ░  ░    ░         ░     ░░   ░ ░  ░  ░\n       ░       ░ ░           ░       ░              ░  ░   ░           ░\n" RESET);
-
-	printf(CYAN "Please enter your name: \n" RESET);
-	scanf(" %[^\n]s ", playerName);
-	printf(BOLDCYAN "Welcome %s!\n" RESET, playerName);
-	getchar();
-	pauseOutput();
-} //END OF: welcomeMessage
-
-
-
 //FUNCTION: pauseOutput = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 void pauseOutput() {
 	printf (CYANBLINK "Press ENTER to Continue!\n" RESET);
@@ -275,6 +273,23 @@ void pauseOutput() {
 	getchar();
 	system("clear");
 }//END Of: pauseOutput
+
+
+
+//FUNCTION: welcomeMessage  = = = = = = = = = = = = = = = = = = = = = = = = = =
+void welcomeMessage(char* playerName) {
+	printf (BOLDCYAN " ▄         ▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄           ▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄▄       ▄▄ ▄▄▄▄▄▄▄▄▄▄▄\n▐░▌       ▐░▐░░░░░░░░░░░▐░▌         ▐░░░░░░░░░░░▐░░░░░░░░░░░▐░░▌     ▐░░▐░░░░░░░░░░░▌\n▐░▌       ▐░▐░█▀▀▀▀▀▀▀▀▀▐░▌         ▐░█▀▀▀▀▀▀▀▀▀▐░█▀▀▀▀▀▀▀█░▐░▌░▌   ▐░▐░▐░█▀▀▀▀▀▀▀▀▀ \n▐░▌       ▐░▐░▌         ▐░▌         ▐░▌         ▐░▌       ▐░▐░▌▐░▌ ▐░▌▐░▐░▌\n▐░▌   ▄   ▐░▐░█▄▄▄▄▄▄▄▄▄▐░▌         ▐░▌         ▐░▌       ▐░▐░▌ ▐░▐░▌ ▐░▐░█▄▄▄▄▄▄▄▄▄ \n▐░▌  ▐░▌  ▐░▐░░░░░░░░░░░▐░▌         ▐░▌         ▐░▌       ▐░▐░▌  ▐░▌  ▐░▐░░░░░░░░░░░▌\n▐░▌ ▐░▌░▌ ▐░▐░█▀▀▀▀▀▀▀▀▀▐░▌         ▐░▌         ▐░▌       ▐░▐░▌   ▀   ▐░▐░█▀▀▀▀▀▀▀▀▀\n▐░▌▐░▌ ▐░▌▐░▐░▌         ▐░▌         ▐░▌         ▐░▌       ▐░▐░▌       ▐░▐░▌\n▐░▌░▌   ▐░▐░▐░█▄▄▄▄▄▄▄▄▄▐░█▄▄▄▄▄▄▄▄▄▐░█▄▄▄▄▄▄▄▄▄▐░█▄▄▄▄▄▄▄█░▐░▌       ▐░▐░█▄▄▄▄▄▄▄▄▄\n▐░░▌     ▐░░▐░░░░░░░░░░░▐░░░░░░░░░░░▐░░░░░░░░░░░▐░░░░░░░░░░░▐░▌       ▐░▐░░░░░░░░░░░▌\n ▀▀       ▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀ ▀         ▀ ▀▀▀▀▀▀▀▀▀▀▀\n\n\n ▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄\n▐░░░░░░░░░░░▐░░░░░░░░░░░▌\n ▀▀▀▀█░█▀▀▀▀▐░█▀▀▀▀▀▀▀█░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░▌       ▐░▌\n     ▐░▌    ▐░█▄▄▄▄▄▄▄█░▌\n     ▐░▌    ▐░░░░░░░░░░░▌\n      ▀      ▀▀▀▀▀▀▀▀▀▀▀\n\n\n" RESET);
+	printf (BOLDRED "███▄ ▄███▓ ▒█████   ███▄    █   ██████ ▄▄▄█████▓▓█████  ██▀███    ██████\n▓██▒▀█▀ ██▒▒██▒  ██▒ ██ ▀█   █ ▒██    ▒ ▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒▒██    ▒\n▓██    ▓██░▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄   ▒ ▓██░ ▒░▒███   ▓██ ░▄█ ▒░ ▓██▄\n▒██    ▒██ ▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒░ ▓██▓ ░ ▒▓█  ▄ ▒██▀▀█▄    ▒   ██▒\n▒██▒   ░██▒░ ████▓▒░▒██░   ▓██░▒██████▒▒  ▒██▒ ░ ░▒████▒░██▓ ▒██▒▒██████▒▒\n░ ▒░   ░  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░  ▒ ░░   ░░ ▒░ ░░ ▒▓ ░▒▓░▒ ▒▓▒ ▒ ░\n░  ░      ░  ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░    ░     ░ ░  ░  ░▒ ░ ▒░░ ░▒  ░ ░\n░      ░   ░ ░ ░ ▒     ░   ░ ░ ░  ░  ░    ░         ░     ░░   ░ ░  ░  ░\n       ░       ░ ░           ░       ░              ░  ░   ░           ░\n" RESET);
+
+	printf(CYAN "Please enter your name: \n" RESET);
+	scanf(" %[^\n]s ", playerName);
+	
+	system("clear");
+	
+	printf(BOLDCYAN "Welcome %s!\n" RESET, playerName);
+	getchar();
+	pauseOutput();
+} //END OF: welcomeMessage
 
 
 
@@ -368,6 +383,8 @@ void printList(monster* n) {
 			n = n -> next;
 		}
 	}
+	
+	printf("============================================================\n\n");
 } //END OF: printList
 
 
@@ -412,7 +429,6 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 		printList(importedMonsters);
 		
-		printf("============================================================\n\n");
 		printf("Please enter the numbers of the Monsters to add to your roster.\n");
 		printf("You may choose between 1 and 6 Monsters.\n");
 		printf("Enter '0' when you are done.\n\n");
@@ -449,7 +465,6 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 					system("clear");
 					printf("\n============================================================\n\n");
 					printList(importedMonsters);
-					printf("============================================================\n\n");
 					printf("\nYou have not added any Monsters!\n\n");
 				} else {
 					done = 1;
@@ -462,7 +477,6 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 				system("clear");
 				printf("\n============================================================\n\n");
 				printList(importedMonsters);
-				printf("============================================================\n\n");
 				printf("You have entered an invalid index.\n");
 				printf("Please enter a number between 1 and %d.", listSize);
 				printf("\nEnter 0 if you are done adding monsters.\n\n");
@@ -529,20 +543,25 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 			//If the monster is defending
 			if ( monsterChoice == 1 ) {
 				printf("Your %s attacked the %s for %d!\n", currentPlayer -> name, currentEnemy -> name, currentPlayer -> attack);
+				
 				printf("The %s defended for %d!\n", currentEnemy -> name, currentEnemy -> defense);
 				
 				damage = ( currentPlayer -> attack - currentEnemy -> defense );
 				
 				if ( damage <= 0 ) {
-					printf("The %s blocked all your %s's attack.\n", currentEnemy -> name, currentPlayer -> name);
+					printf("The %s blocked all your %s's attack.\n\n\n", currentEnemy -> name, currentPlayer -> name);
 				} else {
 					currentEnemy -> health -= damage;
+					
 					printf("The %s was damaged %d HP!\n", currentEnemy -> name, damage);
 					
 					//Is enemy dead?
 					if ( currentEnemy -> health <= 0 ) {
 						currentEnemy -> health = 0;
+						
 						printf("The enemy has no more HP! The %s fainted...\n", currentEnemy -> name);
+					} else {
+						printf("\n\n");
 					}
 				}
 			} else {
@@ -550,42 +569,55 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 				if (currentPlayer -> speed >= currentEnemy -> speed) {
 					damage = currentPlayer -> attack;
 					currentEnemy -> health -= damage;
+					
 					printf("The %s took a full blow! Hit for %d!\n", currentEnemy -> name, damage);
 					
 					//Is enemy dead?
 					if ( currentEnemy -> health <= 0 ) {
 						currentEnemy -> health = 0;
-						printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
+						
+						printf("\nThe enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
 					} else {
 						damage = currentEnemy -> attack;
 						currentPlayer -> health -= damage;
+						
 						printf("Your %s also took a full blow! Hit for %d!\n", currentPlayer -> name, damage);
 						
 						//Is the Player Dead?
 						if ( currentPlayer -> health <= 0 ) {
 							currentPlayer -> health = 0;
-							printf("Your %s has no more HP and fainted!\n", currentPlayer -> name);
+							
+							printf("Your %s has no more HP and fainted!\n\n", currentPlayer -> name);
+						} else {
+							
+							printf("\n\n\n");
 						}
 					}
 				} else { //If the enemy has higher Speed
 					damage = currentEnemy -> attack;
 					currentPlayer -> health -= damage;
+					
 					printf("Your %s took a full blow! Hit for %d!\n", currentPlayer -> name, damage);
 
 					//Is player dead?
 					if (currentPlayer -> health <= 0) {
 						currentPlayer -> health = 0;
-						printf("Your %s has no more HP! The %s fainted...\n\n", currentPlayer -> name, currentPlayer -> name);
+						
+						printf("Your %s has no more HP! The %s fainted...\n\n\n", currentPlayer -> name, currentPlayer -> name);
 						return;
 					} else {
 						damage = currentPlayer -> attack;
 						currentEnemy -> health -= damage;
+						
 						printf("The %s also took a full blow! Hit for %d!\n", currentEnemy -> name, damage);
 						
 						//Is enemy dead?
 						if ( currentEnemy -> health <= 0 ) {
 							currentEnemy -> health = 0;
+							
 							printf("The enemy has no more HP! The %s fainted...\n\n", currentEnemy -> name);
+						} else {
+							printf("\n\n\n");
 						}
 					}
 				}
@@ -594,22 +626,29 @@ void calculateBattle (int playerSelection, monster* currentPlayer, monster* curr
 			
 		case 2:
 			if ( monsterChoice == 1 ) {
-				printf("Both monsters took a defensive stance! Nothing occured!\n");
+				
+				printf("Both monsters took a defensive stance! Nothing occured!\n\n\n\n\n");
 			} else {
+				
 				printf("The %s attacked the %s for %d!\n", currentEnemy -> name, currentPlayer -> name, currentEnemy -> attack);
+				
 				printf("The %s defended for %d!\n", currentPlayer -> name, currentPlayer -> defense);
 				
 				damage = ( currentEnemy -> attack - currentPlayer -> defense );
 				
 				if ( damage <= 0 ) {
-					printf("Your %s blocked all of the %s's attack.\n", currentPlayer -> name, currentEnemy -> name);
+					printf("Your %s blocked all of the %s's attack.\n\n\n", currentPlayer -> name, currentEnemy -> name);
 				} else {
 					currentPlayer -> health -= damage;
+					
 					printf("The %s was damaged %d HP!\n", currentPlayer -> name, damage);
 					
-				if ( currentPlayer -> health <= 0 ) {
+					if ( currentPlayer -> health <= 0 ) {
 						currentPlayer -> health = 0;
-						printf("Your %s has no more HP and fainted!\n\n", currentPlayer -> name);
+						
+						printf("Your %s has no more HP and fainted!\n", currentPlayer -> name);
+					} else {
+						printf("\n\n");
 					}
 				}
 			}
