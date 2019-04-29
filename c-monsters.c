@@ -48,8 +48,6 @@ int main () {
 	//END OF: Function Prototypes = = = = = = = =
 	
 	//Variables = = = = = = = = = = = = = = = = =
-	srand(time(NULL));
-	
 	char playerName[20]; //create player name array 
 	
 	monster enemies[4]; //create enemy array
