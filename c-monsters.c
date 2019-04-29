@@ -5,7 +5,7 @@
 
 //Function from api is randomNumberAPICall().In order to compile correctly, enter in -lcurl after normal compilation  "gcc -o NAME c-monsters.c -lcurl"
 //Uncomment below line to use the api
-//#include "api.h"
+#include "api.h"
 
 #define RESET "\033[0m"
 #define BOLDRED "\033[1;31m"
@@ -37,7 +37,6 @@ int main () {
 	monster* fillPlayerRoster (monster*); //add a monster to player roster
 	
 	int sizeList (monster*); //view the number of monsters
-	int randomNum (); //returns a random number from the API
 	int faintedMonster = 0;
 	
 	monster* fileIO (FILE*);
@@ -47,8 +46,6 @@ int main () {
 	void calculateBattle (int, monster*, monster*);
 	monster * switchMonster (int, monster*);
 	//END OF: Function Prototypes = = = = = = = =
-	
-	//randomNumberAPICall();
 	
 	//Variables = = = = = = = = = = = = = = = = =
 	srand(time(NULL));
@@ -121,19 +118,17 @@ int main () {
 		
 		printf("Please select an action:\n\t1) Attack\n\t2) Defend\n\t3) Switch Monsters\n\nCHOICE: ");
 		scanf("%d",&choice);
-		system("clear");
-
-		
-		printf("\n============================================================\n\n");
 		
 		switch (choice) {
 			//Attack
 			case 1:
 				calculateBattle(choice, currentPlayerMonster, currentEnemyMonster);
+
 				break;
 			//Defend
 			case 2:
 				calculateBattle(choice, currentPlayerMonster, currentEnemyMonster);
+
 				break;
 				
 			case 3:
@@ -544,8 +539,13 @@ monster* fillPlayerRoster (monster* importedMonsters) {
 
 void calculateBattle (int playerSelection, monster* currentPlayer, monster* currentEnemy) {
 	//Set monster to have a 50/50 chance of attacking or defending
-	int monsterChoice = ( rand() % 2 );
+	int monsterChoice = ( randomNumberAPICall() % 2 );
 	int damage = 0;
+
+	system("clear");
+	
+	printf("\n============================================================\n\n");
+
 	
 	switch (playerSelection) {
 		//Attacking
