@@ -1,0 +1,35 @@
+Charizard
+30 20 10
+
+Squirtle
+20 30 20
+
+Bulbasaur
+10 10 10
+
+Pikachu
+10 10 10
+
+Blastoise
+40 30 5
+
+Wartortle
+30 30 10
+
+Charmander
+5 10 20
+
+Charmeleon
+10 15 15
+
+Raichu
+30 20 5
+
+Ivysaur
+25 15 5
+
+Venusaur
+44 18 3
+
+Blue Eyes White Dragon
+100 100 100

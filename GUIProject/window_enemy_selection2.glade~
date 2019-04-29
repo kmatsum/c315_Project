@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.1 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkListStore" id="enemyliststore">
+    <columns>
+      <!-- column-name enemyname -->
+      <column type="gchar"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0">e</col>
+      </row>
+      <row>
+        <col id="0">s</col>
+      </row>
+      <row>
+        <col id="0">w</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkWindow" id="window_enemy_selection">
+    <property name="can_focus">False</property>
+    <signal name="destroy" handler="on_destroy" swapped="no"/>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkFixed">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkButton" id="btn_continue">
+            <property name="label" translatable="yes">Continue</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="on_btn_enemy_continue_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">606</property>
+            <property name="y">347</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">183</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Enemy's Pokemon</property>
+          </object>
+          <packing>
+            <property name="x">135</property>
+            <property name="y">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkListBox" id="enemy_sel_list_box">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="selection_mode">multiple</property>
+          </object>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">211</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkTreeView" id="user_treeview">
+            <property name="name">selec</property>
+            <property name="width_request">692</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="margin_left">2</property>
+            <property name="margin_right">2</property>
+            <property name="margin_top">2</property>
+            <property name="margin_bottom">2</property>
+            <property name="model">enemyliststore</property>
+            <child internal-child="selection">
+              <object class="GtkTreeSelection">
+                <property name="mode">multiple</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">14</property>
+            <property name="y">44</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
