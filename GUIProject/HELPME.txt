@@ -1,0 +1,12 @@
+This is our GUI application project. This does not use all the requirements for the project, but it is still a work in progress
+
+
+Before running the code to run the application, several packages must be installed. The following lines of code need to be used (assuming everything is updated on the computer)
+1) sudo apt-get install libgtk-3-dev
+
+
+In order to run the application, you must type in "gcc `pkg-config --cflags gtk+-3.0` main.c -o "SampleRunName" `pkg-config --libs gtk+-3.0` -rdynamic" where SampleRunName is what
+you type after ./
+
+
+No folders or .glade files need to be moved

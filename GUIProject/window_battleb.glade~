@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.1 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkWindow" id="window_battle">
+    <property name="can_focus">False</property>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkFixed">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">32</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Fight</property>
+            <attributes>
+              <attribute name="size" value="20000"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">354</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_attack">
+            <property name="label" translatable="yes">Attack</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">134</property>
+            <property name="y">512</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_defend">
+            <property name="label" translatable="yes">Defend</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">547</property>
+            <property name="y">512</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="prgbar_enemy">
+            <property name="width_request">267</property>
+            <property name="height_request">81</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="x">532</property>
+            <property name="y">69</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="prgbar_user">
+            <property name="width_request">262</property>
+            <property name="height_request">33</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_right">111</property>
+          </object>
+          <packing>
+            <property name="y">433</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lbl_enemy_name">
+            <property name="width_request">264</property>
+            <property name="height_request">67</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">...</property>
+            <property name="justify">right</property>
+            <attributes>
+              <attribute name="size" value="30000"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">535</property>
+            <property name="y">62</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lbl_user_name">
+            <property name="width_request">423</property>
+            <property name="height_request">45</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">...</property>
+            <attributes>
+              <attribute name="size" value="30000"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="y">383</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lbl_user_decision">
+            <property name="width_request">296</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">label</property>
+            <attributes>
+              <attribute name="size" value="15000"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">7</property>
+            <property name="y">128</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lbl_enemy_decision">
+            <property name="width_request">298</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">label</property>
+            <attributes>
+              <attribute name="size" value="15000"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">7</property>
+            <property name="y">200</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
