@@ -12,6 +12,7 @@ PROGRAM EXECUTION STEPS ======================================
 	sudo apt-get install libcurl4-openssl-dev
 
   This is used for the Random Number Generator API we used
+
 - Compile program with:
 
 	gcc -o c-monsters c-monsters.c -lcurl
