@@ -3,7 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-//Use function randomNumberAPICall to get a value (Not finished yet). In order to compile correctly, type: gcc -Wall c-monsters.c  -lcurl -o "Whatever Name"
+//Function from api is randomNumberAPICall().In order to compile correctly, enter in -lcurl after normal compilation  "gcc -o NAME c-monsters.c -lcurl"
+//Uncomment below line to use the api
 //#include "api.h"
 
 #define RESET "\033[0m"
